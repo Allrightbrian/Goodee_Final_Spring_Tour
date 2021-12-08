@@ -39,7 +39,7 @@ public class AccessLogFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest)request;
 		String chk = req.getParameter("check");
 		boolean flag = Boolean.parseBoolean(chk);
-		System.out.println("필터에서 값을 확인해 봄 : " + chk);
+		//System.out.println("필터에서 값을 확인해 봄 : " + chk);
 		
 		/*if(flag) {
 			chain.doFilter(request, response);
@@ -75,7 +75,7 @@ public class AccessLogFilter implements Filter {
 		//System.out.println(remoteAddr);
 		//System.out.println(uri);
 		//System.out.println(queryString);
-		System.out.println("refer" + referer);
+		//System.out.println("refer" + referer);
 		//System.out.println("User-Agent" + userAgent);
 	}
 
