@@ -5,6 +5,10 @@
 # ide config file
 .dbeaver-data-sources*.xml
 
+# Spring 팀프로젝트 충돌 방지
+MANIFEST.MF
+pom.properties
+
 ### Eclipse ###
 .metadata
 bin/
@@ -14,13 +18,9 @@ tmp/
 *.swp
 *~.nib
 local.properties
-pom.properties
 .settings/
 .loadpath
 .recommenders
-target\m2e-wtp\web-resources\META-INf\MANIFEST.MF
-
-=======
 
 # External tool builders
 .externalToolBuilders/
