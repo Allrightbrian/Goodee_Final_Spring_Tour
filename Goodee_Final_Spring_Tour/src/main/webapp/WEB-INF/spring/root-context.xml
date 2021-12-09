@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-	
-	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- TODO 4. DB의 접속 정보인 src/main/java에 있는 properties 파일을 bean으로 만듦 -->
+	<context:property-placeholder
+		location="classpath:properties/oracle.properties" />
+	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+		<property name="locations"> <list> <value>classpath:properties/oracle.properties</value> 
+		</list> </property> </bean> -->
+
+	<!-- TODO 5. DataSource를 생성하여 DB 접속 권한을 Spring이 IoC(제어 역전)을 가질 수 있도록 함. -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${user}" />
+		<property name="password" value="${pw}" />
+	</bean>
+
+	<!-- TODO 6. SqlSessionFactory 객체를 생성하여 bean을 사용하는 SqlSessionFactoryBean 
+		접속정보 : dataSource, Mybatis의 Alias, mapper의 설정 파일 configuration -->
+
+	<bean id="sqlSessionFactoryBean"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- <property name="configLocation"></property> -->
+		<!-- <property name="configLocation" value="/WEB-INF/spring/sqls/configuration.xml"/> -->
+		<property name="configLocation"
+			value="classpath:sqls/configuration.xml" />
+	</bean>
+
+	<!-- Spring Container에서 DI(주입) 하여 사용할 bean -->
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactoryBean" />
+	</bean>
+
 </beans>
