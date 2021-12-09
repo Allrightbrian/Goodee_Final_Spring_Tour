@@ -17,7 +17,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-MANIFEST.MF
+target\m2e-wtp\web-resources\META-INf\MANIFEST.MF
+
 
 # External tool builders
 .externalToolBuilders/
