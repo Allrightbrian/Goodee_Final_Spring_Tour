@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.edu.model.dao.PostDaoImpl">
+
+	<select id="allPostSelect" resultType="pvo">
+		SELECT POST_ID,
+		POST_TITLE, POST_CONTENT, POST_IMG_PATH, ATTRLOC1, ATTRLOC2,
+		POST_THEME_ID, POST_DELFLAG, POST_REGDATE, POST_LIKE_COUNT,
+		POST_VIEW_COUNT, ID, BOOKNO
+		FROM HR.POST
+	</select>
+	<select id="userPostSelect" resultType="pvo">
+		SELECT POST_ID,
+		POST_TITLE, POST_CONTENT, POST_IMG_PATH, ATTRLOC1, ATTRLOC2,
+		POST_THEME_ID, POST_DELFLAG, POST_REGDATE, POST_LIKE_COUNT,
+		POST_VIEW_COUNT, ID, BOOKNO
+		FROM HR.POST
+		
+	</select>
+</mapper>
