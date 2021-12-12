@@ -2,8 +2,10 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 	<typeAliases>
+		<typeAlias type="com.tour.edu.vo.Post_Vo" alias="pvo"/>
 	</typeAliases>
 	
 	<mappers>
+		<mapper resource="sqls/postmapper.xml"/>
 	</mappers>
 </configuration>
