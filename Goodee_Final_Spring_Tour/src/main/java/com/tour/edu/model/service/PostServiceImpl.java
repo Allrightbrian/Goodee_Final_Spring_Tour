@@ -18,10 +18,22 @@ public class PostServiceImpl implements IPostService{
 	@Autowired
 	private IPostDao dao;
 	
-	
 	@Override
-	public List<Post_Vo> postSelect(String topic) {
-		return dao.postSelect(topic);
+	public List<Post_Vo> postAllSelect() {
+		logger.info("PostServiceImpl postAllSelect");
+		return dao.postAllSelect();
+	}
+
+	@Override
+	public List<Post_Vo> userPostSelect(String user) {
+		logger.info("PostServiceImpl userPostSelect");
+		return dao.userPostSelect(user);
+	}
+
+	@Override
+	public List<Post_Vo> themePostSelect(String user) {
+		logger.info("PostServiceImpl themePostSelect");
+		return dao.themePostSelect(user);
 	}
 	
 }
