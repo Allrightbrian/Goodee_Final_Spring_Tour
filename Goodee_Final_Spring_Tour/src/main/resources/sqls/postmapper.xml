@@ -36,4 +36,13 @@
 						FROM THEME_FOLLOW tf 
 							WHERE USERID = #{id})
 	</select>
+	
+	<select id="detailPostSelect" resultType="pvo" parameterType="java.lang.Integer">
+		SELECT POST_ID, POST_TITLE, POST_CONTENT, 
+		POST_IMG_PATH, ATTRLOC1, ATTRLOC2, 
+		POST_THEME_ID, POST_DELFLAG, POST_REGDATE, 
+		POST_LIKE_COUNT, POST_VIEW_COUNT, ID, BOOKNO
+			FROM HR.POST p
+				WHERE p.POST_ID = #{id}
+	</select>
 </mapper>

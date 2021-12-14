@@ -51,6 +51,7 @@ footer {
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#"><span class="glyphicon glyphicon-user"></span>
 							My Account</a></li>
+					<li style="color: white;">${sessionScope.userid }님 안녕하세요</li>
 				</ul>
 			</div>
 		</div>
@@ -84,9 +85,12 @@ footer {
 					</p>
 					People are looking at your profile. Find out who.
 				</div>
-				<p>
-					<a href="#">Link</a>
-				</p>
+				<c:forEach var="theme" items="${sessionScope.themeList}">
+					<p>
+						<a href="themeFollow.do?themeid=${theme.theme_id}">${theme.theme_name }</a>
+					</p>
+				</c:forEach>
+
 				<p>
 					<a href="#">Link</a>
 				</p>
@@ -113,8 +117,10 @@ footer {
 						<div class="col-sm-3">
 							<div class="well">
 								<p>${post.id}</p>
-								<img src="${post.post_img_path}" class="img-circle"
-									height="55" width="55" alt="Avatar">
+								<a href="./detailPostSelect.do?postid=${post.post_id }"> <img
+									src="${post.post_img_path}" class="img-circle" height="55"
+									width="55" alt="Avatar">
+								</a>
 							</div>
 						</div>
 						<div class="col-sm-9">

@@ -3,9 +3,11 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.tour.edu.vo.Post_Vo" alias="pvo"/>
+		<typeAlias type="com.tour.edu.vo.Theme_Vo" alias="tvo"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="sqls/postmapper.xml"/>
+		<mapper resource="sqls/socialmapper.xml"/>
 	</mappers>
 </configuration>

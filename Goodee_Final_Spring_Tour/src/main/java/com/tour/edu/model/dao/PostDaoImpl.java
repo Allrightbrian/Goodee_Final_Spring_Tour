@@ -33,4 +33,9 @@ public class PostDaoImpl implements IPostDao {
 		return sqlSession.selectList(NS+"themePostSelect", id);
 	}
 
+	@Override
+	public Post_Vo detailPostSelect(int postid) {
+		return sqlSession.selectOne("detailPostSelect", postid);
+	}
+
 }

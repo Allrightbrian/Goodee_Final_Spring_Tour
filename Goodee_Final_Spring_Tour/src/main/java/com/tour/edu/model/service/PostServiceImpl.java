@@ -35,5 +35,11 @@ public class PostServiceImpl implements IPostService{
 		logger.info("PostServiceImpl themePostSelect");
 		return dao.themePostSelect(user);
 	}
+
+	@Override
+	public Post_Vo detailPostSelect(int postid) {
+		logger.info("PostServiceImpl detailPostSelect postid : {}", postid);
+		return dao.detailPostSelect(postid);
+	}
 	
 }
