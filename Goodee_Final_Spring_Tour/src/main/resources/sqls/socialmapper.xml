@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.edu.model.dao.SocialDaoImpl">
+
+	<select id="themeAllSelect" resultType="tvo">
+		SELECT THEME_ID, THEME_NAME
+			FROM HR.THEME
+	</select>
+	<insert id="themeFollow" parameterType="hashMap">
+		INSERT INTO HR.THEME_FOLLOW
+		(THEME_FOLLOW_ID, THEME_FOLLOWING_ID, USERID)
+			VALUES(THEME_FOLLOW_ID_SEQ.NEXTVAL, #{themeid}, #{userid})
+	</insert>
+</mapper>
