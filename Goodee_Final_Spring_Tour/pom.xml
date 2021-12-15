@@ -164,6 +164,13 @@
 			<artifactId>ojdbc10</artifactId>
 			<version>19.12.0.0</version>
 		</dependency>
+		
+		<!-- spring의 bean을 테스트 하기 위한 라이브러리 + Junit과 같이 사용됨 -->
+		<dependency>
+    		<groupId>org.springframework</groupId>
+    		<artifactId>spring-test</artifactId>
+    		<version>${org.springframework-version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
