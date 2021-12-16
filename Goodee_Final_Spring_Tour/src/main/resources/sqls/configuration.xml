@@ -4,6 +4,7 @@
 	<typeAliases>
 		<typeAlias type="com.tour.edu.vo.Post_Vo" alias="pvo"/>
 		<typeAlias type="com.tour.edu.vo.Theme_Vo" alias="tvo"/>
+		<typeAlias type="com.tour.edu.vo.Comment_Vo" alias="cvo"/>
 	</typeAliases>
 	
 	<mappers>

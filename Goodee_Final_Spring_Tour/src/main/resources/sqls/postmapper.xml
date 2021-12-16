@@ -21,7 +21,7 @@
 				WHERE p.ID 
 					IN (SELECT FOLLOWING_ID 
 						FROM USER_FOLLOW 
-							WHERE FOLLOW_ID = #{id})
+							WHERE FOLLOW_ID = #{userid})
 	</select>
 	
 	<select id="themePostSelect" resultType="pvo" parameterType="java.lang.String">
