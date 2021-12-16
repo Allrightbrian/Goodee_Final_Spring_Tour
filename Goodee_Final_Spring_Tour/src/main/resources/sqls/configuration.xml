@@ -7,6 +7,9 @@
 		<typeAlias type="com.tour.edu.vo.Theme_Vo" alias="tvo"/>
 
 		<typeAlias type="com.tour.edu.vo.MyTourBookVo" alias="MyTourBookVo"/>
+		
+		<typeAlias type="com.tour.edu.vo.PaymentsVo" alias="PaymentsVo"/>
+		<typeAlias type="com.tour.edu.vo.ProductsVo" alias="ProductsVo"/>
 
 	</typeAliases>
 	
@@ -16,6 +19,9 @@
 		<mapper resource="sqls/socialmapper.xml"/>
 
 		<mapper resource="sqls/tourBookmapper.xml"/>
+		
+		<mapper resource="sqls/payments.xml"/>
+		<mapper resource="sqls/products.xml"/>
 
 	</mappers>
 </configuration>

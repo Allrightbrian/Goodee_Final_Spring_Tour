@@ -8,5 +8,7 @@
 </head>
 <body>
 	<h1>안녕하세요요요잉?!!</h1>
+	
+	<button onclick="location.href='./paymentTest.do'">결제 테스트 화면으로 이동</button>
 </body>
 </html>
