@@ -8,5 +8,6 @@
 </head>
 <body>
 	<h1>안녕하세요요요잉?!!</h1>
+	<input type="button" onclick="location.href='myBookTourList.do'" value="myBookTour로 가기">
 </body>
 </html>
