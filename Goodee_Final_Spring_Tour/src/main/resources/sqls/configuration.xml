@@ -16,6 +16,6 @@
 		<mapper resource="sqls/socialmapper.xml"/>
 
 		<mapper resource="sqls/tourBookmapper.xml"/>
-
+		<mapper resource="sqls/tourDatamapper.xml"/>
 	</mappers>
 </configuration>
