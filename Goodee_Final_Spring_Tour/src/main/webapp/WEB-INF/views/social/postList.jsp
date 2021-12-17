@@ -6,13 +6,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/onload.js"></script>
 <style>
+
 /* Set black background color, white text and some padding */
 footer {
 	background-color: #555;
@@ -37,6 +42,9 @@ footer {
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#">Home</a></li>
 					<li><a href="#">Messages</a></li>
+					<li><a href="postAllSelect.do">전체 포스트</a></li>
+					<li><a href="themePostSelect.do">팔로우 테마 포스트</a></li>
+					<li><a href="userPostSelect.do">팔로우 유저 포스트</a></li>
 				</ul>
 				<form class="navbar-form navbar-right" role="search">
 					<div class="form-group input-group">
@@ -51,7 +59,7 @@ footer {
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#"><span class="glyphicon glyphicon-user"></span>
 							My Account</a></li>
-					<li style="color: white;">${sessionScope.userid }님 안녕하세요</li>
+					<li style="color: white;">${sessionScope.userid }님안녕하세요</li>
 				</ul>
 			</div>
 		</div>
@@ -86,17 +94,11 @@ footer {
 					People are looking at your profile. Find out who.
 				</div>
 				<c:forEach var="theme" items="${sessionScope.themeList}">
-					<p>
-						<a href="themeFollow.do?themeid=${theme.theme_id}">${theme.theme_name }</a>
+					<p>${theme.theme_name }
+						: <a href="themeFollow.do?themeid=${theme.theme_id}">팔로우 하기</a> /
+						<a href="themeUnFollow.do?themeid=${theme.theme_id}">언팔하기 </a>
 					</p>
 				</c:forEach>
-
-				<p>
-					<a href="#">Link</a>
-				</p>
-				<p>
-					<a href="#">Link</a>
-				</p>
 			</div>
 			<div class="col-sm-7">
 
@@ -116,16 +118,24 @@ footer {
 					<div class="row">
 						<div class="col-sm-3">
 							<div class="well">
-								<p>${post.id}</p>
-								<a href="./detailPostSelect.do?postid=${post.post_id }"> <img
+								<p>user : ${post.id}</p>
+								팔로우하기 ! <a href="./userFollow.do?followingUserId=${post.id}">
+									<img src="${post.post_img_path}" class="img-circle" height="55"
+									width="55" alt="Avatar">
+								</a> <br> 언팔하기 ! <a
+									href="./userUnFollow.do?userUnFolowId=${post.id}"> <img
 									src="${post.post_img_path}" class="img-circle" height="55"
 									width="55" alt="Avatar">
 								</a>
 							</div>
 						</div>
-						<div class="col-sm-9">
+						<div class="col-sm-3">
 							<div class="well">
-								<p>${post.post_content}</p>
+								<p>${post.post_title}</p>
+								<a href="./detailPostSelect.do?postid=${post.post_id }"> <img
+									src="${post.post_img_path}" class="img-circle" height="55"
+									width="55" alt="Avatar">
+								</a>
 							</div>
 						</div>
 					</div>
