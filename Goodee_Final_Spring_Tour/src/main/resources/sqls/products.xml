@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.edu.model.dao.ProductsDaoImpl">
+
+	<!-- 상품 전체 조회 -->
+	<select id="productSelectAll" resultType="ProductsVo">
+		SELECT PRODUCT_CODE, NAME, PRICE,
+				DESCRIPTION, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE, DELFLAG,
+				TO_CHAR(UPDATE_DATE, 'YYYY-MM-DD') AS UPDATE_DATE
+			FROM PRODUCTS
+			WHERE DELFLAG = 'N'
+	</select>
+	<!-- 상품 단일 조회 -->
+	<select id="productSelectOne" parameterType="java.lang.Integer" resultType="ProductsVo">
+		SELECT PRODUCT_CODE, NAME, PRICE, 
+				DESCRIPTION, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE, DELFLAG, 
+				UPDATE_DATE
+			FROM PRODUCTS
+			WHERE PRODUCT_CODE = #{product_code}
+	</select>
+	<!-- 상품 이름으로 조회 -->
+	<select id="productSelectByName" parameterType="java.lang.String" resultType="ProductsVo">
+		SELECT PRODUCT_CODE, NAME, PRICE, 
+				DESCRIPTION, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE, DELFLAG, 
+				TO_CHAR(UPDATE_DATE, 'YYYY-MM-DD') AS UPDATE_DATE
+			FROM PRODUCTS 
+			WHERE NAME LIKE '%' || #{name} || '%'
+	</select>
+	
+	<!-- 상품 등록 -->
+	<insert id="productInsert" parameterType="ProductsVo">
+		INSERT INTO PRODUCTS (PRODUCT_CODE, NAME, PRICE, 
+							  DESCRIPTION, REG_DATE, DELFLAG, 
+							  UPDATE_DATE) 
+			VALUES (PRODUCTS_SEQ.NEXTVAL, #{name}, #{price}, 
+					#{description}, SYSDATE, 'N', 
+					SYSDATE)
+	</insert>
+	<!-- 상품 삭제(delflag) -->
+	<update id="productDelflag" parameterType="java.lang.Integer">
+		UPDATE PRODUCTS 
+			SET DELFLAG = 'Y'
+			WHERE PRODUCT_CODE = #{product_code}
+	</update>
+	<!-- 상품 수정 -->
+	<update id="productUpdate" parameterType="ProductsVo">
+		UPDATE PRODUCTS 
+			SET NAME = #{name}, PRICE = #{price}, DESCRIPTION = #{description}, UPDATE_DATE = SYSDATE
+			WHERE PRODUCT_CODE = #{product_code}
+	</update>
+</mapper>
