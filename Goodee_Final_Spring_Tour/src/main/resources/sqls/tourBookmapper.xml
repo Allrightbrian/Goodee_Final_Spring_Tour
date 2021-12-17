@@ -4,25 +4,40 @@
  	
  	<select id="MyTourBookSelectAll" resultType="MyTourBookVo">
  		SELECT BOOKNO,TITLE,AURTHOR,TO_CHAR(REGDATE,'YYYY-MM-DD') REGDATE,KEYWORD,DELFLAG
- 			FORM MYTOURBOOK
+ 			FROM MYTOURBOOK
  	</select>
  	
  	<select id="MyTourBookSelectNo" parameterType="java.lang.Integer" resultType="MyTourBookVo" >
  		SELECT BOOKNO,TITLE,AURTHOR,TO_CHAR(REGDATE,'YYYY-MM-DD') REGDATE,KEYWORD,DELFLAG
- 			FORM MYTOURBOOK
- 				WHRER BOOKNO= #{bookNo}
+ 			FROM MYTOURBOOK
+ 				WHERE BOOKNO= #{bookNo}
  	</select>
  	
  	<select id="MyTourBookSelectTitle" parameterType="java.lang.String" resultType="MyTourBookVo" >
  		SELECT BOOKNO,TITLE,AURTHOR,TO_CHAR(REGDATE,'YYYY-MM-DD') REGDATE,KEYWORD,DELFLAG
- 			FORM MYTOURBOOK
- 				WHRER TITLE= LIKE '%'|| #{title} ||'%'
+ 			FROM MYTOURBOOK
+ 				WHERE TITLE LIKE '%'|| #{title} ||'%'
  	</select>
  	
- 	<select id="MyTourBookSelectRegdate" parameterType="java.lang.String" resultType="MyTourBookVo" >
+ 	<!-- 수정 필요 -->
+ 	<select id="MyTourBookSelectRegdate" parameterType="java.util.Map" resultType="MyTourBookVo" >
  		SELECT BOOKNO,TITLE,AURTHOR,TO_CHAR(REGDATE,'YYYY-MM-DD') REGDATE,KEYWORD,DELFLAG
- 			FORM MYTOURBOOK
- 				WHRER REGDATE = #{regdate}
+ 			FROM MYTOURBOOK
+ 			<where>
+			<choose>
+				<when test="startdate != null and enddate != null">
+					REGDATE BETWEEN #{startdate} AND #{enddate}
+				</when>
+				<when test="startdate == null">
+					<![CDATA[REGDATE <= #{enddate}]]>
+				</when>
+				<when test="enddate == null">
+					<![CDATA[REGDATE >= #{startdate}]]>
+				</when>
+				<otherwise></otherwise>
+			</choose>
+		</where>
+ 				 
  	</select>
  	
  	<insert id="MyTourBookInsert" parameterType="MyTourBookVo">
@@ -41,6 +56,7 @@
 		UPDATE MYTOURBOOK SET DELFLAG ='Y' WHERE BOOKNO=#{bookNo}
 	</update>
  	
+ 	<!-- BookDate 내용도 같이 제거해야한다. 트랜잭션 필요 -->
  	<delete id="MyTourBookDelete" parameterType="java.lang.Integer">
  		DELETE FROM MYTOURBOOK
 				WHERE BOOKNO=#{bookNo}

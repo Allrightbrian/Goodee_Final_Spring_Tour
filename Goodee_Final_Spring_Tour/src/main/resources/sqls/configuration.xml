@@ -19,9 +19,11 @@
 		<mapper resource="sqls/socialmapper.xml"/>
 
 		<mapper resource="sqls/tourBookmapper.xml"/>
+
 		
 		<mapper resource="sqls/payments.xml"/>
 		<mapper resource="sqls/products.xml"/>
+		<mapper resource="sqls/tourDatamapper.xml"/>
 
 	</mappers>
 </configuration>
