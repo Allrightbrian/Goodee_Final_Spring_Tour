@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.edu.model.dao.MyTourDataDaoImpl">
+	
+	<select id="MyTourDataAll" resultType="com.tour.edu.vo.MyTourDataVo">
+		SELECT DATANO, BOOKNO, ATTRLOC1, ATTRLOC2, TOURORDER, CONTENTID
+			FROM MYTOURDATA
+	</select>
+	
+	<select id="MyTourDataBookNo" parameterType="java.lang.Integer"  resultType="com.tour.edu.vo.MyTourDataVo">
+		SELECT DATANO, BOOKNO, ATTRLOC1, ATTRLOC2, TOURORDER, CONTENTID
+			FROM MYTOURDATA WHERE BOOKNO=#{bookNo}
+	</select>
+	
+	
+	<insert id="MyTourDataInsert" parameterType="com.tour.edu.vo.MyTourDataVo">
+			INSERT INTO MYTOURDATA
+				(DATANO, BOOKNO, ATTRLOC1, ATTRLOC2, TOURORDER, CONTENTID)
+						VALUES(DATANO_SEQ.NEXTVAL, #{bookNo}, #{attrLoc1}, #{attrLoc2}, #{tourOrder}, #{contentId})
+	</insert>
+	
+	<delete id="MyTourDataDeleteDataNo" parameterType="java.lang.Integer">
+		DELETE FROM MYTOURDATA
+			WHERE DATANO=#{dataNo}
+	</delete>
+	
+	<delete id="MyTourDataDeleteBookNo" parameterType="java.lang.Integer">
+		DELETE FROM MYTOURDATA
+			WHERE DATANO=#{bookNo}
+	</delete>
+	
+	
+	<update id="MyTourDataUpdate" parameterType="com.tour.edu.vo.MyTourDataVo">
+		UPDATE MYTOURDATA
+				SET ATTRLOC1=#{attrLoc1}, ATTRLOC2=#{attrLoc2}, TOURORDER= #{tourOrder}, CONTENTID=#{contentId}
+					WHERE DATANO=#{dataNo}
+	</update>
+	
+</mapper>

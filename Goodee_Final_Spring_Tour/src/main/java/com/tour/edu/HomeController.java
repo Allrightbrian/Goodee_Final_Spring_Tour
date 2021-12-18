@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -33,7 +34,22 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
+		
+		
+		
 		return "home";
+	}
+	@GetMapping(value = "/paymentTest.do")
+	public String paymentTest(Model model) {
+		
+		//join 과 session 으로 처리해줘야함
+		model.addAttribute("productName", "상품");
+		model.addAttribute("price", 100);
+		model.addAttribute("userEmail", "testemail@gmail.com");
+		model.addAttribute("userName", "테스터");
+		model.addAttribute("userTel", "010-1234-7777");
+		return "payment/paymentTest";
+		
 	}
 	
 }

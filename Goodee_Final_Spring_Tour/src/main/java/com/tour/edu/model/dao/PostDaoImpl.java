@@ -12,27 +12,30 @@ import com.tour.edu.vo.Post_Vo;
 
 @Repository
 public class PostDaoImpl implements IPostDao {
-	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	private final String NS = "com.tour.edu.model.dao.PostDaoImpl.";
-	
+
 	@Autowired
-	SqlSessionTemplate sqlSession;  
+	SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<Post_Vo> postSelect(String topic) {
-		if(topic == "user") {
-			logger.info("PostDaoImpl postSelect : {}", topic);
-			return sqlSession.selectList(NS+"userPostSelect");
-		}else if (topic == "theme") {
-			return null;
-		}
-		else{
-			logger.info("PostDaoImpl postSelect : {}", topic+"(없음)");
-			return sqlSession.selectList(NS+"allPostSelect");
-		}
-		
+	public List<Post_Vo> postAllSelect() {
+		return sqlSession.selectList(NS + "allPostSelect");
+	}
+
+	@Override
+	public List<Post_Vo> userPostSelect(String id) {
+		return sqlSession.selectList(NS + "userPostSelect", id);
+	}
+
+	@Override
+	public List<Post_Vo> themePostSelect(String id) {
+		return sqlSession.selectList(NS+"themePostSelect", id);
+	}
+
+	@Override
+	public Post_Vo detailPostSelect(int postid) {
+		return sqlSession.selectOne("detailPostSelect", postid);
 	}
 
 }

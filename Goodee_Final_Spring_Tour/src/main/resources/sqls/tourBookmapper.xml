@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.edu.model.dao.MyTourBookDaoImpl">
+ 	
+ 	<select id="MyTourBookSelectAll" resultType="MyTourBookVo">
+ 		SELECT BOOKNO,TITLE,AURTHOR,TO_CHAR(REGDATE,'YYYY-MM-DD') REGDATE,KEYWORD,DELFLAG
+ 			FROM MYTOURBOOK
+ 	</select>
+ 	
+ 	<select id="MyTourBookSelectNo" parameterType="java.lang.Integer" resultType="MyTourBookVo" >
+ 		SELECT BOOKNO,TITLE,AURTHOR,TO_CHAR(REGDATE,'YYYY-MM-DD') REGDATE,KEYWORD,DELFLAG
+ 			FROM MYTOURBOOK
+ 				WHERE BOOKNO= #{bookNo}
+ 	</select>
+ 	
+ 	<select id="MyTourBookSelectTitle" parameterType="java.lang.String" resultType="MyTourBookVo" >
+ 		SELECT BOOKNO,TITLE,AURTHOR,TO_CHAR(REGDATE,'YYYY-MM-DD') REGDATE,KEYWORD,DELFLAG
+ 			FROM MYTOURBOOK
+ 				WHERE TITLE LIKE '%'|| #{title} ||'%'
+ 	</select>
+ 	
+ 	<!-- 수정 필요 -->
+ 	<select id="MyTourBookSelectRegdate" parameterType="java.util.Map" resultType="MyTourBookVo" >
+ 		SELECT BOOKNO,TITLE,AURTHOR,TO_CHAR(REGDATE,'YYYY-MM-DD') REGDATE,KEYWORD,DELFLAG
+ 			FROM MYTOURBOOK
+ 			<where>
+			<choose>
+				<when test="startdate != null and enddate != null">
+					REGDATE BETWEEN #{startdate} AND #{enddate}
+				</when>
+				<when test="startdate == null">
+					<![CDATA[REGDATE <= #{enddate}]]>
+				</when>
+				<when test="enddate == null">
+					<![CDATA[REGDATE >= #{startdate}]]>
+				</when>
+				<otherwise></otherwise>
+			</choose>
+		</where>
+ 				 
+ 	</select>
+ 	
+ 	<insert id="MyTourBookInsert" parameterType="MyTourBookVo">
+ 		INSERT INTO MYTOURBOOK
+			(BOOKNO, TITLE, AURTHOR, REGDATE, KEYWORD, DELFLAG)
+				VALUES(BOOKNO_SEQ.NEXTVAL, #{title}, #{aurthor}, TO_CHAR(SYSDATE,'YYYY-MM-DD') , #{keyword}, 'N')
+ 	</insert>
+ 	
+ 	<update id="MyTourBookUpdate" parameterType="MyTourBookVo">
+ 		UPDATE MYTOURBOOK
+			SET TITLE=#{title}, AURTHOR=#{aurthor}, KEYWORD=#{keyword}, DELFLAG=#{delflag}
+				WHERE BOOKNO=#{bookNo}
+ 	</update>
+ 	
+ 	<update id="MyTourBookDelflag" parameterType="java.lang.Integer">
+		UPDATE MYTOURBOOK SET DELFLAG ='Y' WHERE BOOKNO=#{bookNo}
+	</update>
+ 	
+ 	<!-- BookDate 내용도 같이 제거해야한다. 트랜잭션 필요 -->
+ 	<delete id="MyTourBookDelete" parameterType="java.lang.Integer">
+ 		DELETE FROM MYTOURBOOK
+				WHERE BOOKNO=#{bookNo}
+ 	</delete>
+ 	
+</mapper>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.edu.model.dao.PaymentsDaoImpl">
+
+<!-- 결제 내역 등록(사용자 결제시-자동 등록) -->
+	<insert id="paymentInsert" parameterType="java.util.Map">
+		INSERT INTO PAYMENTS (PAYCODE, IMP_UID, PG,
+							  PAY_METHOD, PAY_STATE, PRICE,
+							  PAY_DATE, CANCELYN, CANCEL_DATE,
+							  CANCEL_DESC, PRODUCT_CODE, USERID,
+							  DELFLAG, UPDATE_DATE) 
+			VALUES (PAYMENTS_SEQ.NEXTVAL, #{imp_uid}, #{pg},
+					#{pay_method}, 'paid', #{price},
+					SYSDATE, 'N', NULL,
+					NULL, #{product_code}, #{userid},
+					'N', SYSDATE)
+	</insert>
+	
+<!-- 결제 내역 전체 조회(관리자) -->
+	<select id="paymentSelectAll" resultType="PaymentsVo">
+		SELECT PAYCODE, IMP_UID, PG, 
+			   PAY_METHOD, PAY_STATE, PRICE, 
+			   PAY_DATE, CANCELYN, CANCEL_DATE, 
+			   CANCEL_DESC, PRODUCT_CODE, USERID, 
+			   DELFLAG, TO_CHAR(UPDATE_DATE, 'YYYY-MM-DD') AS UPDATE_DATE
+			FROM PAYMENTS
+	</select>
+
+<!-- 결제 내역 이름 조회(관리자) -->
+	<select id="paymentSelectById" parameterType="java.lang.String" resultType="PaymentsVo">
+		SELECT PAYCODE, IMP_UID, PG, 
+			   PAY_METHOD, PAY_STATE, PRICE, 
+			   PAY_DATE, CANCELYN, CANCEL_DATE, 
+			   CANCEL_DESC, PRODUCT_CODE, USERID, 
+			   DELFLAG, UPDATE_DATE
+			FROM PAYMENTS
+			WHERE USERID LIKE '%' || #{userid} || '%'
+	</select>
+<!-- 결제 내역 전체내역 조회(사용자) -->
+	<select id="paymentSelectAllByMember" parameterType="java.lang.String" resultType="PaymentsVo">
+		SELECT PAYCODE, IMP_UID, PG, 
+			   PAY_METHOD, PAY_STATE, PRICE, 
+			   PAY_DATE, CANCELYN, CANCEL_DATE, 
+			   CANCEL_DESC, PRODUCT_CODE, USERID, 
+			   DELFLAG
+			FROM PAYMENTS
+			WHERE USERID = #{userid}
+	</select>
+
+<!-- 결제 내역 상세 조회 (관리자, 사용자) -->
+	<select id="paymentSelectOne" parameterType="java.lang.String" resultType="PaymentsVo">
+		SELECT PAYCODE, IMP_UID, PG, 
+			   PAY_METHOD, PAY_STATE, PRICE, 
+			   PAY_DATE, CANCELYN, CANCEL_DATE, 
+			   CANCEL_DESC, PRODUCT_CODE, USERID, 
+			   DELFLAG, UPDATE_DATE
+			FROM PAYMENTS
+			WHERE PAYCODE = #{paycode}
+	</select>
+<!-- 결제 내역 삭제(delflag)(관리자) -->
+	<update id="paymentDelflag" parameterType="java.lang.Integer">
+		UPDATE PAYMENTS 
+			SET DELFLAG = 'Y', UPDATE_DATE = SYSDATE 
+			WHERE PAYCODE = #{paycode}
+	</update>
+
+<!-- 결제 내역 수정(결제 취소 불가로 변경)(관리자) -->
+	<update id="paymentCancelYN" parameterType="java.lang.Integer">
+		UPDATE PAYMENTS 
+			SET CANCELYN = 'N', UPDATE_DATE = SYSDATE 
+			WHERE PAYCODE = #{paycode}
+	</update>
+<!-- 결제 취소 -->
+	<update id="paymentCancel" parameterType="java.util.Map">
+		UPDATE PAYMENTS 
+			SET PAY_STATE = 'CANCEL', CANCEL_DATE = SYSDATE, CANCEL_DESC = #{cancel_desc}, UPDATE_DATE = SYSDATE 
+			WHERE PAYCODE = #{paycode} AND IMP_UID = #{imp_uid}
+	</update>
+
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.edu.model.dao.SocialDaoImpl">
+
+	<select id="themeAllSelect" resultType="tvo">
+		SELECT THEME_ID,
+		THEME_NAME
+		FROM HR.THEME
+	</select>
+
+	<insert id="themeFollow" parameterType="hashMap">
+		INSERT INTO
+		HR.THEME_FOLLOW
+		(THEME_FOLLOW_ID, THEME_FOLLOWING_ID, USERID)
+		VALUES(THEME_FOLLOW_ID_SEQ.NEXTVAL, #{themeid}, #{userid})
+	</insert>
+
+	<insert id="userFollow" parameterType="hashMap">
+		INSERT INTO HR.USER_FOLLOW
+		(USER_FOLLOW_ID, FOLLOW_ID, FOLLOWING_ID)
+		VALUES(USER_FOLLOW_ID_SEQ.NEXTVAL, #{followUserId},
+		#{followingUserId})
+	</insert>
+
+	<delete id="themeUnFollow" parameterType="hashMap">
+		DELETE FROM
+		THEME_FOLLOW tf
+		WHERE THEME_FOLLOWING_ID = #{themeid} AND USERID =
+		#{userid}
+	</delete>
+
+	<delete id="userUnFollow">
+		DELETE FROM HR.USER_FOLLOW
+		WHERE FOLLOW_ID =#{userid}
+		AND FOLLOWING_ID =#{userUnFolowId}
+	</delete>
+
+	<insert id="postCommentInsert" parameterType="cvo">
+		INSERT INTO
+		HR.POST_COMMENT
+		(COMMENT_ID, COMMENT_POST_ID, COMMENT_CONTENT,
+		COMMENT_REGDATE, COMMENT_DELFLAG,
+		ID)
+		VALUES(COMMENT_ID_SEQ.NEXTVAL,
+		#{comment_post_id},
+		#{comment_content}, SYSDATE, 'N', #{id})
+	</insert>
+
+	<select id="postCommentSelect" parameterType="java.lang.String"
+		resultType="cvo">
+		SELECT COMMENT_ID, COMMENT_POST_ID, COMMENT_CONTENT,
+		COMMENT_REGDATE, COMMENT_DELFLAG, ID
+		FROM HR.POST_COMMENT
+		WHERE
+		COMMENT_POST_ID = #{postid}
+	</select>
+
+	<update id="postUpViewCount" parameterType="java.lang.String">
+		UPDATE POST SET
+		POST_VIEW_COUNT = POST_VIEW_COUNT+1
+		WHERE POST_ID = #{postid}
+	</update>
+
+</mapper>
