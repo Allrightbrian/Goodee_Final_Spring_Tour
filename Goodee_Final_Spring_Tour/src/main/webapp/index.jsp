@@ -13,7 +13,6 @@
 	<button onclick="location.href='./paymentTest.do'">결제 테스트 화면으로 이동</button>
 
 	<input type="button" onclick="location.href='myBookTourList.do'" value="myBookTour로 가기">
-	<a href="./loginForm.do">로그인 창(회원가입도 여기서 선택)</a>
 
 </body>
 </html>

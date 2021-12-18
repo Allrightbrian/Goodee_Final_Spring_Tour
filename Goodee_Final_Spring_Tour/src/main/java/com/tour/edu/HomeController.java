@@ -37,7 +37,7 @@ public class HomeController {
 		
 		
 		
-		return "index";
+		return "home";
 	}
 	@GetMapping(value = "/paymentTest.do")
 	public String paymentTest(Model model) {
