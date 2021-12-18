@@ -40,7 +40,7 @@
      		<td>${myTourBook.title}</td>
         	<td>${myTourBook.keyword}</td>
         	<td>${myTourBook.regdate}</td>
-        	<td><input type="button"  onclick="location.href='./myBookTourDetail.do?bookNo=${myTourBook.bookNo}'" value="상세보기"></td>	
+        	<td><input type="button"  onclick="location.href='./myTourBookDetail.do?bookNo=${myTourBook.bookNo}'" value="상세보기"></td>	
      	</tr>
      </c:forEach>
      </c:if>
