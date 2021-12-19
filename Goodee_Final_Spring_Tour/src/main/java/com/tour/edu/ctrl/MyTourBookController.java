@@ -3,6 +3,7 @@ package com.tour.edu.ctrl;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -87,5 +88,34 @@ public class MyTourBookController {
 		
 		return "service/myTourDataInsertForm";
 	}
+	@RequestMapping(value="/myTourDataInsert.do", method=RequestMethod.POST)
+	public String myTourDataInsert(Model model, int[] check,int codeId,int detailCodeId,HttpServletRequest request) {
+		int no=Integer.parseInt(request.getParameter("bookNo"));
+		if(check!=null) {
+			for (int i = 0; i < check.length; i++) {
+				MyTourDataVo vo= new MyTourDataVo();
+				vo.setAttrLoc1(codeId);
+				vo.setAttrLoc2(codeId);
+				vo.setBookNo(no);
+				vo.setContentId(check[i]);
+				dataService.MyTourDataInsert(vo);
+			}
+		}
+		model.addAttribute("bookNo", no);	
+		return "redirect:/myTourBookDetail.do";
+	}
+	
+	@RequestMapping(value="/myTourDataDelete.do", method=RequestMethod.POST)
+	public String myTourDataDelete(Model model,int[] check,String bookNo) {//,String[] tourOrder
+		
+		for (int i = 0; i < check.length; i++) {
+			//System.out.println(check[i]);
+			dataService.MyTourDataDeleteDataNo(check[i]);
+		}
+		model.addAttribute("bookNo", bookNo);
+		
+		return "redirect:/myTourBookDetail.do";
+	}
+	
 	
 }
