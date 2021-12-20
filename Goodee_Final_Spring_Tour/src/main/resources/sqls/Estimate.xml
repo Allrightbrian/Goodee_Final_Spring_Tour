@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.edu.model.dao.EstimateDaoImpl">
+	
+	<select id="EstimateSelectUserId" parameterType="java.lang.String" resultType="com.tour.edu.vo.Estimate">
+		SELECT OFFERCODE ,AREACODE ,SIGUNGUCODE ,TITLE ,CONTENT ,NUMOFATTR ,USERID 
+			FROM ESTIMATE WHRER =#{userId}
+	</select>
+	
+	<insert id="EstimateInsert" parameterType="com.tour.edu.vo.Estimate">
+		INSERT INTO ESTIMATE
+					(OFFERCODE, AREACODE, SIGUNGUCODE, 
+							TITLE, CONTENT, NUMOFATTR, USERID)
+					VALUES(OFFERCODE_SEQ.NEXTVAL, #{areacode}, #{sigungucode}, 
+								#{title}, #{content}, #{numOfAttr}, #{userId})
+	</insert>
+	
+	<update id="EstimateUpdate" parameterType="com.tour.edu.vo.Estimate">
+		UPDATE ESTIMATE
+				SET TITLE=#{title}, CONTENT=#{content}, NUMOFATTR=#{numOfAttr}
+						WHERE OFFERCODE=#{offerCode}
+	</update>
+	
+	<delete id="EstimateDelete" parameterType="java.lang.Integer">
+		DELETE FROM ESTIMATE
+			WHERE OFFERCODE=#{offerCode}
+	</delete>
+
+
+</mapper>
