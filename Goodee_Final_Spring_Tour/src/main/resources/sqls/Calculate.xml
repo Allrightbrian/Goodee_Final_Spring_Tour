@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.edu.model.dao.CalculateDaoImpl">
+		
+		
+		<select id="CalculateSelectAll" resultType="com.tour.min.edu.CalculateVo">
+			SELECT RESULTCODE, OFFERCODE, ROUTE, TITLE, CONTENT, VIEWCNT, USERID
+					FROM CALCULATE
+		</select>
+		
+		<select id="CalculateSelectResultCode" parameterType="java.lang.Integer"  resultType="com.tour.min.edu.CalculateVo">
+			SELECT RESULTCODE, OFFERCODE, ROUTE, TITLE, CONTENT, VIEWCNT, USERID
+					FROM CALCULATE WHERE RESULTCODE=#{resultCode}
+		</select>
+			
+		<insert id="CalculateInsert" parameterType="com.tour.min.edu.CalculateVo">
+			INSERT INTO CALCULATE
+							(RESULTCODE, OFFERCODE, ROUTE, 
+								TITLE, CONTENT, VIEWCNT, USERID)
+							VALUES(CALCULATE_SEQ.NEXTVAL, #{offerCode}, #{route},
+								#{title}, #{content}, #{viewCnt}, #{userId})
+		</insert>
+	
+		<update id="CalculateUpdate" parameterType="com.tour.min.edu.CalculateVo">
+			UPDATE CALCULATE
+			SET ROUTE=#{route}, TITLE=#{title}, CONTENT=#{content}, VIEWCNT=#{viewCnt}
+				WHERE RESULTCODE=#{resultCode}
+		</update>
+		
+		<update id="CalculateCntUp" parameterType="com.tour.min.edu.CalculateVo">
+			UPDATE CALCULATE
+			SET VIEWCNT=#{viewCnt}
+				WHERE RESULTCODE=#{resultCode}
+		</update>
+		
+		<delete id="CalculateDelete" parameterType="java.lang.Integer">
+			DELETE FROM CALCULATE
+				WHERE RESULTCODE=#{resultCode}
+		</delete>
+		
+</mapper>

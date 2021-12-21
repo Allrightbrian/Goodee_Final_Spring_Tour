@@ -14,7 +14,22 @@
 	function myTourBookInsert() {
 		location.href="./myTourBookInsertForm.do";
 	}
-	
+	$("#checkAll").click(function(){
+		if($("#checkAll").prop("checked")){
+			$(".myTourData").prop("checked",true);
+		}else{
+			$(".myTourData").prop("checked",false);
+		}
+	})
+	function onChange(){
+		var total = $("input[name=check]").length;
+			var checked = $("input[name=check]:checked").length;
+			if(total == checked){
+				$("#checkAll").prop("checked",true);
+			}else{
+				$("#checkAll").prop("checked",false);
+			}
+	}	
 </script>
 <title>MyTourBook 검색</title>
 </head>
@@ -24,6 +39,7 @@
   <input type="button" onclick="myTourBookInsert();" id="myTourBookInsert" value="MyTourBook생성하기"/>
   <input type="text" id="title" name="title" placeholder="제목을 입력해주세요.">
   <input type="button" onclick="titleseach();" id="titleSeach" value="검색"/>
+    <input type="button" onclick="myTourBookDelete();" id="BookDelete" value="삭제하기"/>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -31,6 +47,7 @@
         <td>키워드</td>
         <td>생성날짜</td>
         <td>상세보기</td>
+        <td>전체선택하기<input type="checkbox"  name="checkAll" id="checkAll"/></td>
       </tr>
     </thead>
     <tbody id="tbody">
@@ -41,6 +58,7 @@
         	<td>${myTourBook.keyword}</td>
         	<td>${myTourBook.regdate}</td>
         	<td><input type="button"  onclick="location.href='./myTourBookDetail.do?bookNo=${myTourBook.bookNo}'" value="상세보기"></td>	
+     		<td><input type='checkbox' class='myTourBook' name='check' onchange='onChange()' value="${myTourBook.bookNo}"></td>
      	</tr>
      </c:forEach>
      </c:if>

@@ -25,6 +25,7 @@
 		<mapper resource="sqls/payments.xml"/>
 		<mapper resource="sqls/products.xml"/>
 		<mapper resource="sqls/tourDatamapper.xml"/>
-
+		<mapper resource="sqls/Estimate.xml"/>
+		<mapper resource="sqls/Calculate.xml"/>
 	</mappers>
 </configuration>
