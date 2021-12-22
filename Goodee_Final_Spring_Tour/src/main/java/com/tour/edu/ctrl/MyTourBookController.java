@@ -43,12 +43,13 @@ public class MyTourBookController {
 	}
 	
 	
-	@RequestMapping(value = "/myBookTourDetail.do", method =  RequestMethod.GET)
+	@RequestMapping(value = "/myTourBookDetail.do", method =  RequestMethod.GET)
 	public String myBookTourdetail(Model model, String bookNo) {
 		logger.info("MyTourBookController myBookTourdetail 실행");
 		int no = Integer.parseInt(bookNo);
 		List<MyTourDataVo> myTourDatalists=dataService.MyTourDataBookNo(no);
 		model.addAttribute("myTourDatalists", myTourDatalists);
+		model.addAttribute("bookNo", bookNo);		
 		return "service/myTourBookDetail";
 	}
 	
@@ -80,20 +81,24 @@ public class MyTourBookController {
 		//myTourBookvo.setAurthor(session.getAttribute(username));
 		myTourBookvo.setAurthor("User1");
 		bookservice.MyTourBookInsert(myTourBookvo);
-		return "redirect:/service/myBookTourList.do";
+		return "redirect:/myBookTourList.do";
 	}
 	
 	@RequestMapping(value="/myTourDataInsertForm.do" , method= RequestMethod.GET)
-	public String myTourDataInsertForm() {
-		
+	public String myTourDataInsertForm(Model model, String bookNo) {
+		logger.info("MyTourBookController myTourDataInsertForm 실행");		
+		model.addAttribute("bookNo", bookNo);	
 		return "service/myTourDataInsertForm";
 	}
+	
 	@RequestMapping(value="/myTourDataInsert.do", method=RequestMethod.POST)
-	public String myTourDataInsert(Model model, int[] check,int codeId,int detailCodeId,HttpServletRequest request) {
+	public String myTourDataInsert(Model model,String[] name,int[] check,int codeId,int detailCodeId,HttpServletRequest request) {
+		logger.info("MyTourBookController myTourDataInsert 실행");	
 		int no=Integer.parseInt(request.getParameter("bookNo"));
 		if(check!=null) {
 			for (int i = 0; i < check.length; i++) {
 				MyTourDataVo vo= new MyTourDataVo();
+				vo.setName(name[i]);
 				vo.setAttrLoc1(codeId);
 				vo.setAttrLoc2(codeId);
 				vo.setBookNo(no);
@@ -107,7 +112,7 @@ public class MyTourBookController {
 	
 	@RequestMapping(value="/myTourDataDelete.do", method=RequestMethod.POST)
 	public String myTourDataDelete(Model model,int[] check,String bookNo) {//,String[] tourOrder
-		
+		logger.info("MyTourBookController myTourDataDelete 실행");	
 		for (int i = 0; i < check.length; i++) {
 			//System.out.println(check[i]);
 			dataService.MyTourDataDeleteDataNo(check[i]);
@@ -117,5 +122,17 @@ public class MyTourBookController {
 		return "redirect:/myTourBookDetail.do";
 	}
 	
-	
+	@RequestMapping(value="/myTourDataTourOrder.do", method = RequestMethod.POST)
+	public String myTourDataTourOrder(Model model, int[] tourOrder,int[] dataNo,String bookNo) {
+		logger.info("MyTourBookController myTourDataTourOrder 실행 {}", tourOrder);	
+		for (int i = 0; i < tourOrder.length; i++) {
+			MyTourDataVo vo= new MyTourDataVo();
+			vo.setTourOrder(tourOrder[i]);
+			vo.setDataNo(dataNo[i]);
+			dataService.MyTourDataTourOrderUpdate(vo);
+		}
+		
+		model.addAttribute("bookNo", bookNo);
+		return  "redirect:/myTourBookDetail.do";
+	}
 }

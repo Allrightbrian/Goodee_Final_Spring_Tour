@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tour.edu.vo.MyTourBookVo;
 
@@ -15,7 +16,7 @@ public class MyTourBookDaoImpl implements IMyTourBookDao {
 	
 	private Logger logger= LoggerFactory.getLogger(this.getClass());
 	private final String NS="com.tour.edu.model.dao.MyTourBookDaoImpl.";
-	
+	private final String NS2="com.tour.edu.model.dao.MyTourDataDaoImpl.";
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
@@ -54,17 +55,23 @@ public class MyTourBookDaoImpl implements IMyTourBookDao {
 		logger.info("MyTourBookDaoImpl MyTourBookUpdate 실행");
 		return sqlSession.update(NS+"MyTourBookUpdate", myTourBookvo);
 	}
-
+	
+	@Transactional
 	@Override
 	public int MyTourBookDelflag(int bookNo) {
 		logger.info("MyTourBookDaoImpl MyTourBookDelflag 실행");
-		return sqlSession.update(NS+"MyTourBookDelflag", bookNo);
+		int n=sqlSession.update(NS+"MyTourBookDelflag", bookNo);
+		int m=sqlSession.delete(NS2+"MyTourBookDelete", bookNo);
+		return n+m;
 	}
-
+	
+	@Transactional
 	@Override
 	public int MyTourBookDelete(int bookNo) {
 		logger.info("MyTourBookDaoImpl MyTourBookDelete 실행");
-		return sqlSession.delete(NS+"MyTourBookDelete", bookNo);
+		int n=sqlSession.update(NS+"MyTourBookDelete", bookNo);
+		int m=sqlSession.delete(NS2+"MyTourBookDelete", bookNo);
+		return  n+m;
 	}
 	
 }

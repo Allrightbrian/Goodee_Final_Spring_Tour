@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tour.edu.model.dao.EstimateDaoImpl">
 	
-	<select id="EstimateSelectUserId" parameterType="java.lang.String" resultType="com.tour.edu.vo.Estimate">
+	<select id="EstimateSelectUserId" parameterType="java.lang.String" resultType="com.tour.edu.vo.EstimateVo">
 		SELECT OFFERCODE ,AREACODE ,SIGUNGUCODE ,TITLE ,CONTENT ,NUMOFATTR ,USERID 
 			FROM ESTIMATE WHRER =#{userId}
 	</select>
 	
-	<insert id="EstimateInsert" parameterType="com.tour.edu.vo.Estimate">
+	<insert id="EstimateInsert" parameterType="com.tour.edu.vo.EstimateVo">
 		INSERT INTO ESTIMATE
 					(OFFERCODE, AREACODE, SIGUNGUCODE, 
 							TITLE, CONTENT, NUMOFATTR, USERID)
@@ -15,7 +15,7 @@
 								#{title}, #{content}, #{numOfAttr}, #{userId})
 	</insert>
 	
-	<update id="EstimateUpdate" parameterType="com.tour.edu.vo.Estimate">
+	<update id="EstimateUpdate" parameterType="com.tour.edu.vo.EstimateVo">
 		UPDATE ESTIMATE
 				SET TITLE=#{title}, CONTENT=#{content}, NUMOFATTR=#{numOfAttr}
 						WHERE OFFERCODE=#{offerCode}

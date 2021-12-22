@@ -65,7 +65,8 @@ $(document).ready(function() {
     				var cell3 = row.insertCell(2);
     				var cell4 = row.insertCell(3);
 					cell1.innerHTML =
-					"<a href='./myTourDataDetail.do?contentId="+data[list].contentid+"'>"+data[list].title+"</a>";
+					"<a href='./myTourDataDetail.do?contentId="+data[list].contentid+"'>"+data[list].title+"</a>"
+					+"<input type='hidden' name='name' value='"+data[list].title+"'>";
 					if(data[list].addr2!=null && data[list].addr1!=null){
 						cell2.innerHTML = data[list].addr1 +" "+ data[list].addr2;
 					}else if(data[list].addr2==null){

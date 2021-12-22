@@ -52,5 +52,11 @@ public class MyTourDataServiceImpl implements IMyTourDataService {
 		logger.info("MyTourDataServiceImpl MyTourDataBookNo 실행");
 		return dao.MyTourDataBookNo(bookNo);
 	}
+
+	@Override
+	public int MyTourDataTourOrderUpdate(MyTourDataVo vo) {
+		logger.info("MyTourDataServiceImpl MyTourDataTourOrderUpdate 실행");
+		return dao.MyTourDataTourOrderUpdate(vo);
+	}
 	
 }

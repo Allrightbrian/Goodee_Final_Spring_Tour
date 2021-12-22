@@ -56,4 +56,11 @@ public class MyTourDataDaoImpl implements IMyTourDataDao {
 		return lists;
 	}
 
+	@Override
+	public int MyTourDataTourOrderUpdate(MyTourDataVo vo) {
+		logger.info("MyTourDataDaoImpl MyTourDataBookNo 실행 MyTourDataVo: {}", vo);
+		
+		return sqlSession.update(NS+"MyTourDataTourOrderUpdate", vo);
+	}
+
 }
