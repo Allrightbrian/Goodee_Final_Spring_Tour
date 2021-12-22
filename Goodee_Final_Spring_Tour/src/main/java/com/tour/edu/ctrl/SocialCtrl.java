@@ -136,5 +136,13 @@ public class SocialCtrl {
 		socialService.postCommentSelect(postid);
 		return "redirect:/detailPostSelect.do?postid="+postid;
 	}
+	
+	@RequestMapping(value = "/profile.do")
+	public String Profile(String id) {
+		logger.info("SocialCtrl Profile 유저아이디 -> {}", id);
+		socialService.profileSelect(id);
+		return "profile";
+	}
+	
 
 }

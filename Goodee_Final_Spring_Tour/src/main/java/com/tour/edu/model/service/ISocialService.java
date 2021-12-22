@@ -22,4 +22,6 @@ public interface ISocialService {
 	public List<Comment_Vo> postCommentSelect(String postid);
 
 	public boolean postUpViewCount(String postid);
+
+	public void profileSelect(String id);
 }

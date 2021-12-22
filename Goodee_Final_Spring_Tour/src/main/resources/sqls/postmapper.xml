@@ -9,6 +9,7 @@
 		POST_DELFLAG, POST_REGDATE, POST_LIKE_COUNT,
 		POST_VIEW_COUNT, ID, BOOKNO
 			FROM HR.POST
+			ORDER BY POST_REGDATE DESC
 	</select>
 	
 	<select id="userPostSelect" resultType="pvo" parameterType="java.lang.String">
