@@ -11,6 +11,7 @@
 		
 		<typeAlias type="com.tour.edu.vo.PaymentsVo" alias="PaymentsVo"/>
 		<typeAlias type="com.tour.edu.vo.ProductsVo" alias="ProductsVo"/>
+		<typeAlias type="com.tour.edu.vo.MemberVo" alias="memvo"/>
 
 	</typeAliases>
 	
@@ -27,5 +28,6 @@
 		<mapper resource="sqls/tourDatamapper.xml"/>
 		<mapper resource="sqls/Estimate.xml"/>
 		<mapper resource="sqls/Calculate.xml"/>
+		<mapper resource="sqls/membermapper.xml"/>
 	</mappers>
 </configuration>

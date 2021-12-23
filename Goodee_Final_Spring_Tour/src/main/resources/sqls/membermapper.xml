@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.edu.model.dao.MemberDaoImpl">
+	<insert id="joinMember">
+		INSERT INTO MEMBER VALUES(
+			#{id}, #{password}, #{name}, 
+			#{nickname}, #{phone}, #{email}, 
+			SYSDATE,0, 'N',
+			'N', NULL, 'N', 
+			NULL,'N', #{snsjoin}
+		)
+	</insert>
+	<select id="login" resultType="memvo">
+		<if test='snsjoin.equals("N")'>
+			SELECT * FROM MEMBER
+			WHERE ID=#{id} AND PASSWORD=#{password} AND DELFLAG='N'
+		</if>
+		<if test='snsjoin.equals("Y")'>
+			SELECT * FROM MEMBER
+			WHERE ID=#{id} AND DELFLAG='N' AND SNSJOIN='Y'
+		</if>
+	</select>
+	
+	<select id="checkDuplicateId" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM MEMBER
+				WHERE ID=#{id}
+	</select>
+	
+	<select id="checkDuplicateNick" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM MEMBER
+				WHERE NICKNAME=#{nickname}
+	</select>
+	
+	<update id="deleteMember">
+		UPDATE MEMBER SET DELFLAG='Y' WHERE ID=#{id}
+	</update>
+	
+	<update id="updateMember">
+		UPDATE MEMBER SET NAME=#{name}, 
+		<if test="password != null and !password.equals('')">
+			PASSWORD=#{password},
+		</if>
+		NICKNAME=#{nickname}, PHONE=#{phone}, 
+		EMAIL=#{email} WHERE ID=#{id}
+	</update>
+	
+	<update id="panalty">
+		UPDATE MEMBER SET PANALTY='Y', PANALTY_END_DATE=#{panalty_end_date}
+			WHERE ID=#{id}
+	</update>
+	
+	<update id="deletePanalty">
+		UPDATE MEMBER SET PANALTY='N', PANALTY_END_DATE='' WHERE ID=#{id}
+	</update>
+	
+	<select id="findId" resultType="java.lang.String">
+		SELECT ID FROM MEMBER
+			WHERE NAME=#{name} AND PHONE=#{phone}
+	</select>
+	
+	<select id="findPw" resultType="java.lang.String">
+		SELECT EMAIL FROM MEMBER
+			WHERE ID=#{id} AND NAME=#{name} AND PHONE=#{phone}
+	</select>
+	
+	<update id="setTemporaryPw">
+		UPDATE MEMBER SET PASSWORD=#{password}
+			WHERE ID = #{id}
+	</update>
+	
+	<update id="updateFinalLogin">
+		UPDATE MEMBER SET FINAL_LOGIN=SYSDATE
+			WHERE ID=#{id}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
