@@ -16,9 +16,9 @@ $(document).ready(function() {
 	
 	var markers = [];
 	
-	$("#toruLoadInsert").click(function() {
-		var contentId = document.getElementsByClassName("contentId");
-		var tourOrder = document.getElementsByClassName("tourOrder");
+	$('#toruLoadInsert').click(function() {
+		var contentId = document.getElementsByClassName('contentId');
+		var tourOrder = document.getElementsByClassName('tourOrder');
 		for (var i = 0; i < tourOrder.length; i++) {
      		console.log(tourOrder[i].value,contentId[i].textContent);
     	}
@@ -26,12 +26,12 @@ $(document).ready(function() {
 		for (var i = 0; i < contentId.length; i++) {
      		Arrays.push(contentId[i].textContent);
     	}
-		var objParams = {"contentId" : Arrays };
+		var objParams = {'contentId' : Arrays };
 		$.ajax({
-			url: "./ajaxSearchTourDataList.do",
+			url: './ajaxSearchTourDataList.do',
 			data: objParams,
-			type: "POST",
-			datatype: "JSON",
+			type: 'POST',
+			datatype: 'JSON',
 			success: function(data) {
 				console.log(data);
 				setMarkers(null);
@@ -47,7 +47,7 @@ $(document).ready(function() {
 					});
 
 					markers.push(marker);
-					var iwContent = '<div style="padding:5px;">' + data[list].title + '</div>'
+					var iwContent = "<div style='padding:5px;'>" + data[list].title + "</div>"
 					
 					, iwRemoveable = true; 
 
@@ -81,13 +81,13 @@ $(document).ready(function() {
 				
 				mapx = mapx / Number(data.length);
 				mapy = mapy / Number(data.length);
-				console.log("평균 좌표 : " + mapx + " / " + mapy);
+				console.log('평균 좌표 : ' + mapx + ' / ' + mapy);
 
 				panTo(mapy, mapx);
 				
 			},
 			error: function() {
-				alert("데이터 입력이 잘못되었습니다.");
+				alert('데이터 입력이 잘못되었습니다.');
 			}
 		})
 	})
@@ -114,7 +114,7 @@ $(document).ready(function() {
 		if(distance>0){
 			var distanceOverlay = new daum.maps.CustomOverlay(
 				{
-					content: '<div class="dotOverlay">거리<span class="number">'+distance+'</span>m</div>',
+					content: "<div class='dotOverlay'>거리<span class='number'>"+distance+"</span></div>",
 					position: position,
 					yAnchor: 1,
 					zIndex: 2
@@ -123,7 +123,49 @@ $(document).ready(function() {
 			//지도에 표시합니다
 			distanceOverlay.setMap(map);
 		}
+		
 	}
-	
+	$('#myTourDataDelete').click(function(){
+		var check=[];
+		var bookNo= $('#bookNo').val();
+		$('input[name=check]:checked').each(function(){
+			var chk=$(this).is(':checked');
+			if(chk==true){
+				check.push($(this).val());
+			}
+		})
+		console.log(check);
+		var objParams = {'check' : check };
+		$.ajax({
+			url: './myTourDataDelete.do?bookNo='+bookNo,
+			data: objParams,
+			type: 'POST',
+			datatype: 'JSON',
+			success: function(data) {
+				$('.myTourDataList').remove();
+				console.log(data.list);
+				for(i in data.list){
+				var my_tbody = document.getElementById('tbody');
+				var row = my_tbody.insertRow( my_tbody.rows.length );
+				 $("#tbody tr").addClass('myTourDataList');	
+					var cell1 = row.insertCell(0);
+    				var cell2 = row.insertCell(1);
+    				var cell3 = row.insertCell(2);
+    				var cell4 = row.insertCell(3);
+    				var cell5 = row.insertCell(4);
+    				var cell6 = row.insertCell(5);
+					cell1.innerHTML = data.list[i].name;
+					cell2.innerHTML = data.list[i].attrLoc1;
+					cell3.innerHTML = data.list[i].attrLoc2;
+					cell4.innerHTML = "<input type='text' name='tourOrder' class='tourOrder' value='"+data.list[i].tourOrder+"'>";					 
+					cell5.innerHTML = "<p class='contentId'>"+data.list[i].contentId+"</p>"+"<input type='hidden' name='dataNo' value='"+data.list[i].dataNo+"'>";
+					cell6.innerHTML = "<input type='checkbox' class='myTourData' name='check' onchange='onChange()' value="+data.list[i].dataNo+">";
+				}
+			},
+			error: function(){
+				alert('오류가 발생했습니다. 삭제가 완료되지 못했습니다.');
+			}
+		});
+	});
 	
 })

@@ -3,26 +3,32 @@
 <mapper namespace="com.tour.edu.model.dao.MyTourDataDaoImpl">
 	
 	<select id="MyTourDataAll" resultType="com.tour.edu.vo.MyTourDataVo">
-		SELECT DATANO, BOOKNO, ATTRLOC1, ATTRLOC2, TOURORDER, CONTENTID
+		SELECT DATANO, BOOKNO, ATTRLOC1, ATTRLOC2, TOURORDER, CONTENTID, NAME
 			FROM MYTOURDATA
 	</select>
 	
 	<select id="MyTourDataBookNo" parameterType="java.lang.Integer"  resultType="com.tour.edu.vo.MyTourDataVo">
-		SELECT DATANO, BOOKNO, ATTRLOC1, ATTRLOC2, TOURORDER, CONTENTID
-			FROM MYTOURDATA WHERE BOOKNO=#{bookNo}
+		SELECT DATANO, BOOKNO, ATTRLOC1, ATTRLOC2, TOURORDER, CONTENTID ,NAME
+			FROM MYTOURDATA WHERE BOOKNO=#{bookNo} ORDER BY TOURORDER
 	</select>
 	
 	
 	<insert id="MyTourDataInsert" parameterType="com.tour.edu.vo.MyTourDataVo">
 			INSERT INTO MYTOURDATA
-				(DATANO, BOOKNO, ATTRLOC1, ATTRLOC2, TOURORDER, CONTENTID)
-						VALUES(DATANO_SEQ.NEXTVAL, #{bookNo}, #{attrLoc1}, #{attrLoc2}, #{tourOrder}, #{contentId})
+				(DATANO, BOOKNO, ATTRLOC1, ATTRLOC2, TOURORDER, CONTENTID, NAME)
+						VALUES(DATANO_SEQ.NEXTVAL, #{bookNo}, #{attrLoc1}, #{attrLoc2}, 0 , #{contentId} ,#{name})
 	</insert>
+	
+	<update id="MyTourDataDelflag" parameterType="java.lang.Integer">
+		UPDATE MYTOURDATA SET DELFLAG ='Y' WHERE BOOKNO=#{bookNo}
+	</update>
 	
 	<delete id="MyTourDataDeleteDataNo" parameterType="java.lang.Integer">
 		DELETE FROM MYTOURDATA
 			WHERE DATANO=#{dataNo}
 	</delete>
+	
+	
 	
 	<delete id="MyTourDataDeleteBookNo" parameterType="java.lang.Integer">
 		DELETE FROM MYTOURDATA
@@ -35,9 +41,10 @@
 				SET ATTRLOC1=#{attrLoc1}, ATTRLOC2=#{attrLoc2}, TOURORDER= #{tourOrder}, CONTENTID=#{contentId}
 					WHERE DATANO=#{dataNo}
 	</update>
-		<update id="MyTourDataTourOrderUpdate" parameterType="com.tour.edu.vo.MyTourDataVo">
+	<update id="MyTourDataTourOrderUpdate" parameterType="com.tour.edu.vo.MyTourDataVo">
 		UPDATE MYTOURDATA
 				SET TOURORDER= #{tourOrder}
 				WHERE DATANO=#{dataNo}
 	</update>
+	
 </mapper>
