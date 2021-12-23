@@ -10,7 +10,7 @@
 <body>
 	<div class="container">
   <h2>MyTourBook 검색</h2>
-  <input type="button" onclick="myTourBookInsert();" id="myTourBookInsert" value="MyTourBook생성하기"/>
+  <input type="button" onclick="location.href='./EstimateInsertForm.do';" id="EstimateInsert" value="견적서 생성하기"/>
   <input type="text" id="title" name="title" placeholder="제목을 입력해주세요.">
   <input type="button" onclick="titleseach();" id="titleSeach" value="검색"/>
   

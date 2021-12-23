@@ -27,13 +27,13 @@ public class EstimateController {
 		logger.info("EstimateController UserId를 통해서 견적서 확인 {}", userId);
 		List<EstimateVo> lists=service.EstimateSelectUserId(userId);
 		model.addAttribute("lists", lists);
-		return "EstimateSelect";
+		return "service/EstimateList";
 	}
 	
 	@GetMapping(value="/EstimateInsertForm.do")
 	public String EstimateInsertForm() {
 		
-		return "EstimateInsertForm";
+		return "service/EstimateInsertForm";
 	}
 	
 	@PostMapping(value="/EstimateInsert.do")
@@ -42,6 +42,6 @@ public class EstimateController {
 		vo.setUserId("USER01");
 		service.EstimateInsert(vo);
 		
-		return "redirect:/EstimateSelect.do";
+		return "redirect:/EstimateSelectUserId.do";
 	}
 }

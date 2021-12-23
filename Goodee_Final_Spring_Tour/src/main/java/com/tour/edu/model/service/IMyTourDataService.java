@@ -12,4 +12,5 @@ public interface IMyTourDataService {
 	public int MyTourDataDeleteBookNo(int bookNo);
 	public int MyTourDataUpdate(MyTourDataVo vo);
 	public List<MyTourDataVo> MyTourDataBookNo(int bookNo);
+	public int MyTourDataTourOrderUpdate(MyTourDataVo vo);
 }

@@ -35,5 +35,9 @@
 				SET ATTRLOC1=#{attrLoc1}, ATTRLOC2=#{attrLoc2}, TOURORDER= #{tourOrder}, CONTENTID=#{contentId}
 					WHERE DATANO=#{dataNo}
 	</update>
-	
+		<update id="MyTourDataTourOrderUpdate" parameterType="com.tour.edu.vo.MyTourDataVo">
+		UPDATE MYTOURDATA
+				SET TOURORDER= #{tourOrder}
+				WHERE DATANO=#{dataNo}
+	</update>
 </mapper>

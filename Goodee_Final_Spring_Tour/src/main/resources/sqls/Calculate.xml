@@ -3,17 +3,17 @@
 <mapper namespace="com.tour.edu.model.dao.CalculateDaoImpl">
 		
 		
-		<select id="CalculateSelectAll" resultType="com.tour.min.edu.CalculateVo">
+		<select id="CalculateSelectAll" resultType="com.tour.edu.vo.CalculateVo">
 			SELECT RESULTCODE, OFFERCODE, ROUTE, TITLE, CONTENT, VIEWCNT, USERID
 					FROM CALCULATE
 		</select>
 		
-		<select id="CalculateSelectResultCode" parameterType="java.lang.Integer"  resultType="com.tour.min.edu.CalculateVo">
+		<select id="CalculateSelectResultCode" parameterType="java.lang.Integer"  resultType="com.tour.edu.vo.CalculateVo">
 			SELECT RESULTCODE, OFFERCODE, ROUTE, TITLE, CONTENT, VIEWCNT, USERID
 					FROM CALCULATE WHERE RESULTCODE=#{resultCode}
 		</select>
 			
-		<insert id="CalculateInsert" parameterType="com.tour.min.edu.CalculateVo">
+		<insert id="CalculateInsert" parameterType="com.tour.edu.vo.CalculateVo">
 			INSERT INTO CALCULATE
 							(RESULTCODE, OFFERCODE, ROUTE, 
 								TITLE, CONTENT, VIEWCNT, USERID)
@@ -21,13 +21,13 @@
 								#{title}, #{content}, #{viewCnt}, #{userId})
 		</insert>
 	
-		<update id="CalculateUpdate" parameterType="com.tour.min.edu.CalculateVo">
+		<update id="CalculateUpdate" parameterType="com.tour.edu.vo.CalculateVo">
 			UPDATE CALCULATE
 			SET ROUTE=#{route}, TITLE=#{title}, CONTENT=#{content}, VIEWCNT=#{viewCnt}
 				WHERE RESULTCODE=#{resultCode}
 		</update>
 		
-		<update id="CalculateCntUp" parameterType="com.tour.min.edu.CalculateVo">
+		<update id="CalculateCntUp" parameterType="com.tour.edu.vo.CalculateVo">
 			UPDATE CALCULATE
 			SET VIEWCNT=#{viewCnt}
 				WHERE RESULTCODE=#{resultCode}
