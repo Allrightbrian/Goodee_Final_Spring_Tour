@@ -4,46 +4,76 @@
 
 	<select id="allPostSelect" resultType="pvo">
 		SELECT POST_ID,
-		POST_TITLE, POST_CONTENT, POST_IMG_PATH, 
+		POST_TITLE, POST_CONTENT, POST_IMG_PATH,
 		ATTRLOC1, ATTRLOC2, POST_THEME_ID,
 		POST_DELFLAG, POST_REGDATE, POST_LIKE_COUNT,
 		POST_VIEW_COUNT, ID, BOOKNO
-			FROM HR.POST
-			ORDER BY POST_REGDATE DESC
+		FROM HR.POST
+		ORDER BY POST_REGDATE DESC
 	</select>
-	
-	<select id="userPostSelect" resultType="pvo" parameterType="java.lang.String">
+
+	<select id="userPostSelect" resultType="pvo"
+		parameterType="java.lang.String">
 		SELECT POST_ID,
-		POST_TITLE, POST_CONTENT, POST_IMG_PATH, 
-		ATTRLOC1, ATTRLOC2, POST_THEME_ID, 
+		POST_TITLE, POST_CONTENT, POST_IMG_PATH,
+		ATTRLOC1, ATTRLOC2, POST_THEME_ID,
 		POST_DELFLAG, POST_REGDATE, POST_LIKE_COUNT,
 		POST_VIEW_COUNT, ID, BOOKNO
-			FROM HR.POST p
-				WHERE p.ID 
-					IN (SELECT FOLLOWING_ID 
-						FROM USER_FOLLOW 
-							WHERE FOLLOW_ID = #{userid})
+		FROM HR.POST p
+		WHERE p.ID
+		IN (SELECT FOLLOWING_ID
+		FROM USER_FOLLOW
+		WHERE FOLLOW_ID = #{userid})
 	</select>
-	
-	<select id="themePostSelect" resultType="pvo" parameterType="java.lang.String">
-		SELECT POST_ID, POST_TITLE, POST_CONTENT, 
-		POST_IMG_PATH, ATTRLOC1, ATTRLOC2, 
-		POST_THEME_ID, POST_DELFLAG, POST_REGDATE, 
-		POST_LIKE_COUNT, POST_VIEW_COUNT, ID, 
+
+	<select id="themePostSelect" resultType="pvo"
+		parameterType="java.lang.String">
+		SELECT POST_ID, POST_TITLE, POST_CONTENT,
+		POST_IMG_PATH, ATTRLOC1, ATTRLOC2,
+		POST_THEME_ID, POST_DELFLAG, POST_REGDATE,
+		POST_LIKE_COUNT, POST_VIEW_COUNT, ID,
 		BOOKNO
-			FROM HR.POST p
-				WHERE p.POST_THEME_ID 
-					IN (SELECT THEME_FOLLOWING_ID 
-						FROM THEME_FOLLOW tf 
-							WHERE USERID = #{id})
+		FROM HR.POST p
+		WHERE p.POST_THEME_ID
+		IN (SELECT THEME_FOLLOWING_ID
+		FROM THEME_FOLLOW tf
+		WHERE USERID = #{id})
 	</select>
-	
-	<select id="detailPostSelect" resultType="pvo" parameterType="java.lang.Integer">
-		SELECT POST_ID, POST_TITLE, POST_CONTENT, 
-		POST_IMG_PATH, ATTRLOC1, ATTRLOC2, 
-		POST_THEME_ID, POST_DELFLAG, POST_REGDATE, 
+
+	<select id="detailPostSelect" resultType="pvo"
+		parameterType="java.lang.Integer">
+		SELECT POST_ID, POST_TITLE, POST_CONTENT,
+		POST_IMG_PATH, ATTRLOC1, ATTRLOC2,
+		POST_THEME_ID, POST_DELFLAG, POST_REGDATE,
 		POST_LIKE_COUNT, POST_VIEW_COUNT, ID, BOOKNO
-			FROM HR.POST p
-				WHERE p.POST_ID = #{id}
+		FROM HR.POST p
+		WHERE p.POST_ID = #{id}
+	</select>
+
+	<select id="profilePostSelect" resultType="pvo"
+		parameterType="java.lang.String">
+		SELECT POST_ID, POST_TITLE, POST_CONTENT,
+		POST_IMG_PATH, ATTRLOC1, ATTRLOC2,
+		POST_THEME_ID, POST_DELFLAG, POST_REGDATE,
+		POST_LIKE_COUNT, POST_VIEW_COUNT, ID, BOOKNO
+		FROM HR.POST p
+		WHERE p.ID = #{userid}
+	</select>
+
+	<insert id="wirtePost" parameterType="pvo">
+		INSERT INTO HR.POST p
+		(POST_ID, POST_TITLE, POST_CONTENT, POST_IMG_PATH, ATTRLOC1, ATTRLOC2,
+		POST_THEME_ID, POST_DELFLAG, POST_REGDATE, POST_LIKE_COUNT,
+		POST_VIEW_COUNT, ID, BOOKNO)
+		VALUES(
+		POST_ID_SEQ.NEXTVAL, #{post_title}, #{post_content}, #{post_img_path},
+		(SELECT md.ATTRLOC1 FROM MYTOURDATA md WHERE md.BOOKNO = #{bookno}), (SELECT md.ATTRLOC2 FROM MYTOURDATA md WHERE md.BOOKNO = #{bookno})
+		, #{post_theme_id}, 'N', SYSDATE, 0, 0, #{id}, #{bookno})
+	</insert>
+	
+	<select id="myTourSelect" parameterType="java.lang.String" resultType="MyTourBookVo">
+		SELECT BOOKNO, TITLE, AURTHOR, REGDATE, KEYWORD, DELFLAG
+			FROM HR.MYTOURBOOK
+				WHERE AURTHOR = #{userid}
 	</select>
 </mapper>

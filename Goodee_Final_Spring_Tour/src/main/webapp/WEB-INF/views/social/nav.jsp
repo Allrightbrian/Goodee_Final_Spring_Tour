@@ -14,7 +14,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="./js/onload.js"></script>
+<script type="text/javascript" src="./js/onload.js"></script>
 <style>
 /* Remove the navbar's default margin-bottom and rounded borders */
 .navbar {
@@ -27,6 +27,7 @@ footer {
 	background-color: #f2f2f2;
 	padding: 25px;
 }
+
 </style>
 </head>
 <body>
@@ -59,9 +60,8 @@ footer {
 					</div>
 				</form>
 				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="./myProfile.do"><span class="glyphicon glyphicon-user"></span>내 프로필 보기</a>
-					</li>
+					<li><a href="./myProfile.do?userid=${sessionScope.userid}"><span
+							class="glyphicon glyphicon-user"></span>내 프로필 보기</a></li>
 					<li style="color: white;">${sessionScope.userid }님안녕하세요</li>
 				</ul>
 			</div>
