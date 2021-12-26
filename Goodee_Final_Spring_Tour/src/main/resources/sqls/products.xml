@@ -26,6 +26,14 @@
 			FROM PRODUCTS 
 			WHERE NAME LIKE '%' || #{name} || '%'
 	</select>
+	<!-- 상품 이름으로 단일 조회 -->
+	<select id="productSelectOneByName" parameterType="java.lang.String" resultType="ProductsVo">
+		SELECT PRODUCT_CODE, NAME, PRICE, 
+				DESCRIPTION, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE, DELFLAG, 
+				TO_CHAR(UPDATE_DATE, 'YYYY-MM-DD') AS UPDATE_DATE
+			FROM PRODUCTS 
+			WHERE NAME = #{name}
+	</select>
 	
 	<!-- 상품 등록 -->
 	<insert id="productInsert" parameterType="ProductsVo">

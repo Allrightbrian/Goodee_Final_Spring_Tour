@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 추가</title>
+<%@ include file="../common/topMenu.jsp" %>
 </head>
 <body>
 <div class="container">
@@ -27,6 +28,9 @@
 			</table>
 			<button type="submit">등록</button>
 		</form>
+		<div>
+			<input type="button" class="btn btn-warning btn-block btn-lg" value="돌아가기" onclick="history.back(-1)">
+		</div>
 	</div>
 </body>
 </html>

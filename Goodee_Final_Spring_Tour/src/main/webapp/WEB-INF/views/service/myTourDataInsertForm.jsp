@@ -40,6 +40,7 @@ if(total == checked){
 	margin: 0 auto;
 }
 </style>
+<%@ include file="../common/topMenu.jsp" %>
 </head>
 
 <body>

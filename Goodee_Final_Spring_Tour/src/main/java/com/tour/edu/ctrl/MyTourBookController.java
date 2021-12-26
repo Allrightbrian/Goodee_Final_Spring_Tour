@@ -25,8 +25,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tour.edu.model.service.IMyTourBookService;
 import com.tour.edu.model.service.IMyTourDataService;
+import com.tour.edu.model.service.IProductsService;
 import com.tour.edu.vo.MyTourBookVo;
 import com.tour.edu.vo.MyTourDataVo;
+import com.tour.edu.vo.ProductsVo;
 
 @Controller
 public class MyTourBookController {
@@ -37,12 +39,23 @@ public class MyTourBookController {
 	private IMyTourBookService bookservice;
 	@Autowired 
 	private IMyTourDataService dataService;
+	@Autowired
+	private IProductsService service;
 	
 	@RequestMapping(value = "/myBookTourList.do", method = RequestMethod.GET)
-	public String MyTourBookList(Model model) {
+	public String MyTourBookList(Model model, HttpSession session) {
 		logger.info("MyTourBookController MyTourBookList 실행");
 		List<MyTourBookVo> myTourBookList=bookservice.MyTourSelectAll();
 		model.addAttribute("myTourBookList", myTourBookList);
+		
+		@SuppressWarnings("unchecked")
+		Map<String, String> memberInfo = (Map<String, String>) session.getAttribute("memberInfo");
+		System.out.println(memberInfo+"MyTourBookController MyTourBookList memberInfo 확인");
+//		model.addAttribute("userid", id);
+		
+		ProductsVo productInfo = (ProductsVo) service.productSelectOneByName("인벤토리추가");
+		model.addAttribute("productInfo", productInfo);
+		
 		return "service/myTourBookList";
 	}
 	

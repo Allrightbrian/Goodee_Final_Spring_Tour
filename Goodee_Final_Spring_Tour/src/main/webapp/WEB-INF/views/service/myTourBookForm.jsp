@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script type="text/javascript" src="./js/duplication.js"></script>
+<%@ include file="../common/topMenu.jsp" %>
 </head>
 <body>
 <form action="./myTourBookInsert.do" method="get">

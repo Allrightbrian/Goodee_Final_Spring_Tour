@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%@ include file="./topMenu.jsp" %>
 </head>
 <body>
 	${sessionScope.member.id}

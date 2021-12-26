@@ -61,6 +61,7 @@
 	}
 </script>
 <title>myTourBookDetail</title>
+<%@ include file="../common/topMenu.jsp" %>
 </head>
 <body>
 	<div class="container">

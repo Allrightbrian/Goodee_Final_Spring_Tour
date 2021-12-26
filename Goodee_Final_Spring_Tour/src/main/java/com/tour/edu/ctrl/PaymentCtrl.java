@@ -1,7 +1,6 @@
 package com.tour.edu.ctrl;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,10 @@ import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import com.tour.edu.model.service.IPaymentsService;
+import com.tour.edu.model.service.IProductsService;
+import com.tour.edu.vo.MemberVo;
 import com.tour.edu.vo.PaymentsVo;
+import com.tour.edu.vo.ProductsVo;
 
 @Controller
 public class PaymentCtrl {
@@ -38,18 +40,30 @@ public class PaymentCtrl {
 	@Autowired
 	private IPaymentsService service;
 	
+	@Autowired
+	private IProductsService productsService;
+	
 	private IamportClient client;
 	public PaymentCtrl() {
 		client = new IamportClient(apiKey, apisecret);
 	}
 	
 	@GetMapping(value = "/paymentList.do")
-	public String PaymentList(Model model) {
-		logger.info("PaymentCtrl 결제전체조회 호출");
-		List<PaymentsVo> paymentList = service.paymentSelectAll();
-		model.addAttribute("paymentList", paymentList);
+	public String PaymentList(Model model, HttpSession session) {
+		logger.info("PaymentCtrl PaymentList 호출");
 		
-		return "payment/paymentList";
+		MemberVo vo = (MemberVo)session.getAttribute("member");
+		
+		if(vo.getManager().equals("Y")) {
+			List<PaymentsVo> paymentList = service.paymentSelectAll();
+			model.addAttribute("paymentList", paymentList);
+			
+			return "payment/paymentList";
+		}else {
+			List<PaymentsVo> paymentList = service.paymentSelectAllByMember(vo.getId());
+			model.addAttribute("paymentList", paymentList);
+			return "payment/paymentList";
+		}
 	}
 	
 	/**
@@ -74,17 +88,22 @@ public class PaymentCtrl {
 //			System.out.println("paidAmount : " + paidAmount);
 			if(paidAmount.equals(iamportServerAmount)) {
 				System.out.println("인증성공");
-				String product_code = Integer.toString(1);
+				ProductsVo vo = productsService.productSelectOneByName(map.get("name"));
+				@SuppressWarnings("unchecked")
+				Map<String, String> memberInfo = (Map<String, String>) session.getAttribute("memberInfo");
+				String userid = memberInfo.get("memberId");
+				String product_code = Integer.toString(vo.getProduct_code());
 				map.put("product_code", product_code);
-				map.put("userid", "아이디1");
+				map.put("price", map.get("price"));
+				map.put("userid", userid);
 				service.paymentInsert(map);
 				//검증 추가할 방법 생각해보기
 			}else {
 				System.out.println("인증실패");
 				CancelData cancel_data = new CancelData(imp_uid, true); //imp_uid를 통한 전액취소
 				client.cancelPaymentByImpUid(cancel_data);
-				//위변조 시도된 경우 세션 삭제 추가
-//				session.removeAttribute("userid");
+				//위변조 시도된 경우 세션 삭제 추가 // 별도의 페이지라 세션 공유가 안됨 따라서 logout.do를 호출하여 세션 삭제
+				
 			}
 			return client.paymentByImpUid(imp_uid);
 	}
@@ -102,4 +121,5 @@ public class PaymentCtrl {
 		cancel_data.setChecksum(BigDecimal.valueOf(client_cancel_request_amount));
 		return client.cancelPaymentByImpUid(cancel_data);
 	}
+	
 }

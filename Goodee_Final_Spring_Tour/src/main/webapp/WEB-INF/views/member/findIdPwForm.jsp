@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="./js/member.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<%@ include file="../common/topMenu.jsp" %>
 </head>
 <body>
 	<form method="post">

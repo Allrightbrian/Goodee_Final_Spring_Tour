@@ -9,6 +9,7 @@
 <script type="text/javascript" src="./js/member.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
+<%@ include file="../common/topMenu.jsp" %>
 <body>
 <form method="post">
 	<input type="hidden" name="id" value="${sessionScope.member.id}">
