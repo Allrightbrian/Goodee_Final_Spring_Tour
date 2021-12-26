@@ -42,4 +42,29 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
+	
+	<!-- 메일 보내기 -->
+	<!-- 서버의 정보를 입력해주면 됨 -->
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"></property>
+		<property name="port" value="587"></property>
+		<property name="username" value="zzangkkukku0218@gmail.com"></property> <!-- 내 이메일 작성! -->
+		<!-- <property name="password" value=""></property> 내 이메일 비밀번호 작성!! -->
+		<!-- 만약에 비밀번호에 특수문자가 있다면 CDATA 처리를 해야함. 거의 필수적임!!!! -->
+		<property name="password">
+			<value>
+				<![CDATA[ahlbffgylxqbferc]]>
+			</value>
+		</property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.debug">true</prop><!-- 메일 보낼 때 log -->
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<!-- 만약 TLS가 문제가 발생하면 false로 해도 됨. 아니면 인증키를 생성 -->
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	
 </beans>

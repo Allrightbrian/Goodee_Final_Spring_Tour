@@ -14,5 +14,6 @@
 
 	<input type="button" onclick="location.href='myBookTourList.do'" value="myBookTour로 가기">
 
+	<button onclick="location.href='./loginForm.do'">로그인 화면으로 이동</button>
 </body>
 </html>
