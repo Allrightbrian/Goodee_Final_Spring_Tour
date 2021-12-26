@@ -62,15 +62,27 @@
 </script>
 <title>myTourBookDetail</title>
 <%@ include file="../common/topMenu.jsp" %>
+
+<style>
+.dot {overflow:hidden;float:left;width:12px;height:12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');}    
+.dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
+.dotOverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}    
+.number {font-weight:bold;color:#ee6152;}
+.dotOverlay:after {content:'';position:absolute;margin-left:-6px;left:50%;bottom:-8px;width:11px;height:8px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png')}
+.distanceInfo {position:relative;top:5px;left:5px;list-style:none;margin:0;}
+.distanceInfo .label {display:inline-block;width:50px;}
+.distanceInfo:after {content:none;}
+.lable {
+	color: #333333;
+
+}
+</style>
 </head>
 <body>
 	<div class="container">
 		<h2>myTourBookDetail</h2>
 		<form action="./myTourDataTourOrder.do" method="post" onsubmit="return tourOrderUpdate();">
-			<!-- 
-  	<input type="submit" value="수정" formaction="/manage/update">
-	<input type="submit" value="삭제" formaction="/manage/delete">
-   -->
+		
 			<input type="button" onclick="myTourDataInsertForm();"
 				id="myTourDataInsert" value="MyTourData추가하기" />
 			<input type="hidden" id="bookNo" value="${requestScope.bookNo}" name="bookNo">
