@@ -69,4 +69,10 @@ public class SocialServiceImpl implements ISocialService {
 		return dao.postUpViewCount(postid);
 	}
 
+	@Override
+	public void profileSelect(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

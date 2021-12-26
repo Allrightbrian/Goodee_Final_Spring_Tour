@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <%@ include file="./nav.jsp"%>
-<title>포스트 보기</title>
+<title>프로필 보기</title>
 </head>
 <body>
 	<div class="container text-center">
@@ -49,10 +50,7 @@
 					<div class="col-sm-12">
 						<div class="panel panel-default text-left">
 							<div class="panel-body">
-								<p contenteditable="true">Status: Feeling Blue</p>
-								<button type="button" class="btn btn-default btn-sm">
-									<span class="glyphicon glyphicon-thumbs-up"></span> Like
-								</button>
+								<a href="./wirtePostForm.do">새글 작성</a>
 							</div>
 						</div>
 					</div>
@@ -60,24 +58,11 @@
 				<c:forEach var="post" items="${postList}">
 					<div class="row">
 						<div class="col-sm-3">
-							<div class="well">
-								<p>user : ${post.id}</p>
-								팔로우하기 ! <a href="./userFollow.do?followingUserId=${post.id}">
-									<img src="${post.post_img_path}" class="img-circle" height="55"
-									width="55" alt="Avatar">
-								</a> <br> 언팔하기 ! <a
-									href="./userUnFollow.do?userUnFolowId=${post.id}"> <img
-									src="${post.post_img_path}" class="img-circle" height="55"
-									width="55" alt="Avatar">
-								</a>
-							</div>
-						</div>
-						<div class="col-sm-3">
-							<div class="well">
+							<div class="well grid">
 								<p>${post.post_title}</p>
 								<a href="./detailPostSelect.do?postid=${post.post_id }"> <img
-									src="${post.post_img_path}" class="img-circle" height="55"
-									width="55" alt="Avatar">
+									src="${post.post_img_path}" height="100"
+									width="100" alt="Avatar">
 								</a>
 							</div>
 						</div>
@@ -106,6 +91,5 @@
 	<footer class="container-fluid text-center">
 		<p>Footer Text</p>
 	</footer>
-
 </body>
 </html>
