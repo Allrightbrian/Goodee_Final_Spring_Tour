@@ -52,11 +52,7 @@
 				WHERE BOOKNO=#{bookNo}
  	</update>
  	
- 	<update id="MyTourBookDelflag" parameterType="java.lang.Integer">
-		UPDATE MYTOURBOOK SET DELFLAG ='Y' WHERE BOOKNO=#{bookNo}
-	</update>
  	
- 	<!-- BookDate 내용도 같이 제거해야한다. 트랜잭션 필요 -->
  	<delete id="MyTourBookDelete" parameterType="java.lang.Integer">
  		DELETE FROM MYTOURBOOK
 				WHERE BOOKNO=#{bookNo}

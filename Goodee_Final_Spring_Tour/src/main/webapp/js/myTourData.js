@@ -35,7 +35,26 @@ $(document).ready(function() {
 		});
 	});
 
-
+	/*$("#insert").click(function(){
+		var chkbox= document.getElementsByClassName("myTourData");
+		//$('#ckBox').is(':checked')
+		var namebox = document.getElementsByClassName("name");
+		console.log(namebox.length+":"+chkbox.length);
+		var contentid = [];
+		var name=[];
+		for(var i=0; chkbox.length; i++){
+			var chek= chkbox[i];
+			/*if(chek){
+				console.log(chkbox[i].value);
+				console.log(namebox[i].value);
+				contentid.push(chkbox[i].value);	
+				name.push(namebox[i].value);
+				
+			}
+		}
+		local.href="./myTourDataInsert.do?name"+name+"&contentid"+contentid;
+	})*/
+	
 	$('#search').click(function() {
 
 		console.log("검색 클릭");
@@ -66,7 +85,7 @@ $(document).ready(function() {
     				var cell4 = row.insertCell(3);
 					cell1.innerHTML =
 					"<a href='./myTourDataDetail.do?contentId="+data[list].contentid+"'>"+data[list].title+"</a>"
-					+"<input type='hidden' name='name' value='"+data[list].title+"'>";
+					+"<input type='hidden' class='name' name='name' value='"+data[list].title+"'>";
 					if(data[list].addr2!=null && data[list].addr1!=null){
 						cell2.innerHTML = data[list].addr1 +" "+ data[list].addr2;
 					}else if(data[list].addr2==null){
@@ -77,7 +96,7 @@ $(document).ready(function() {
 						cell2.innerHTML = "주소가 현재 입력되지 않았습니다";
 					}
 					cell3.innerHTML = data[list].contentid;
-					cell4.innerHTML = "<input type='checkbox' class='myTourData' name='check' onchange='onChange()' value='"+data[list].contentid+"'>";
+					cell4.innerHTML = "<input type='checkbox' class='myTourData' name='check' onchange='onChange()' value='"+data[list].contentid+":"+data[list].title+"'>";
 
 					var markerPosition = new kakao.maps.LatLng(data[list].mapy, data[list].mapx);
 
@@ -151,7 +170,7 @@ $(document).ready(function() {
 
 function onChange(){
 		var total = $("input[name=check]").length;
-			var checked = $("input[name=check]:checked").length;
+		var checked = $("input[name=check]:checked").length;
 			if(total == checked){
 				$("#checkAll").prop("checked",true);
 			}else{

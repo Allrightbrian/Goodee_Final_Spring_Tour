@@ -30,6 +30,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+
 @Controller
 public class TestController {
 
@@ -40,18 +42,6 @@ public class TestController {
 	// private String pageNo = "3";
 	private String type = "json";
 
-
-	@GetMapping("/goajax.do")
-	public String goAjax() {
-		return "testajax";
-	}
-
-	@GetMapping("/goselectAjax.do")
-	public String goSelectAjax() {
-		return "selectAjax";
-	}
-
-	
 
 	@GetMapping("/getAjaxMain.do")
 	@ResponseBody
@@ -211,6 +201,7 @@ public class TestController {
 		return jArr;
 	}
 
+	@SuppressWarnings("unchecked")
 	@GetMapping("/myTourDataDetail.do")
 	public String myTourDataDetail(Model model, HttpServletRequest req) throws IOException, ParseException {
 
@@ -261,13 +252,10 @@ public class TestController {
 		try {
 			map = new ObjectMapper().readValue(jArr.toString(), Map.class);
 		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(map.get("modifiedtime"));

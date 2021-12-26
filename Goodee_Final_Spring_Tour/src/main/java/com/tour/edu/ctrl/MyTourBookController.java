@@ -1,5 +1,6 @@
 package com.tour.edu.ctrl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,14 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -92,17 +96,20 @@ public class MyTourBookController {
 	}
 	
 	@RequestMapping(value="/myTourDataInsert.do", method=RequestMethod.POST)
-	public String myTourDataInsert(Model model,String[] name,int[] check,int codeId,int detailCodeId,HttpServletRequest request) {
+	public String myTourDataInsert(Model model,String[] check,int codeId,int detailCodeId,HttpServletRequest request) {
 		logger.info("MyTourBookController myTourDataInsert 실행");	
 		int no=Integer.parseInt(request.getParameter("bookNo"));
 		if(check!=null) {
 			for (int i = 0; i < check.length; i++) {
+				String str= check[i];
+				String[] array = str.split(":");
 				MyTourDataVo vo= new MyTourDataVo();
-				vo.setName(name[i]);
+				vo.setName(array[1]);
 				vo.setAttrLoc1(codeId);
 				vo.setAttrLoc2(codeId);
 				vo.setBookNo(no);
-				vo.setContentId(check[i]);
+				vo.setContentId(Integer.parseInt(array[0]));
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@ vo"+vo.toString());
 				dataService.MyTourDataInsert(vo);
 			}
 		}
@@ -110,21 +117,32 @@ public class MyTourBookController {
 		return "redirect:/myTourBookDetail.do";
 	}
 	
-	@RequestMapping(value="/myTourDataDelete.do", method=RequestMethod.POST)
-	public String myTourDataDelete(Model model,int[] check,String bookNo) {//,String[] tourOrder
+	
+	@PostMapping(value="/myTourDataDelete.do")
+	@ResponseBody
+	public Map<String,Object> myTourDataDelete(Model model,
+			@RequestParam(value="check[]")	List<String> check,int bookNo) {//,String[] tourOrder
 		logger.info("MyTourBookController myTourDataDelete 실행");	
-		for (int i = 0; i < check.length; i++) {
-			//System.out.println(check[i]);
-			dataService.MyTourDataDeleteDataNo(check[i]);
+		logger.info("MyTourBookController bookNo {}", bookNo);
+		if(check==null) {
+			logger.info("check된 항목이 없습니다.");
+		}else {
+			for (int i = 0; i < check.size(); i++) {
+				dataService.MyTourDataDeleteDataNo(Integer.parseInt(check.get(i)));
+			}
 		}
-		model.addAttribute("bookNo", bookNo);
 		
-		return "redirect:/myTourBookDetail.do";
+		model.addAttribute("bookNo", bookNo);
+		List<MyTourDataVo> listVo=dataService.MyTourDataBookNo(bookNo);
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("list", listVo);
+		System.out.println(map.get("list"));
+		return map;
 	}
 	
 	@RequestMapping(value="/myTourDataTourOrder.do", method = RequestMethod.POST)
-	public String myTourDataTourOrder(Model model, int[] tourOrder,int[] dataNo,String bookNo) {
-		logger.info("MyTourBookController myTourDataTourOrder 실행 {}", tourOrder);	
+	public String myTourDataTourOrder(Model model, int[] tourOrder,int[] dataNo,int bookNo) {
+		logger.info("MyTourBookController myTourDataTourOrder 실행 {}", tourOrder);
 		for (int i = 0; i < tourOrder.length; i++) {
 			MyTourDataVo vo= new MyTourDataVo();
 			vo.setTourOrder(tourOrder[i]);
@@ -133,6 +151,7 @@ public class MyTourBookController {
 		}
 		
 		model.addAttribute("bookNo", bookNo);
+		
 		return  "redirect:/myTourBookDetail.do";
 	}
 }
