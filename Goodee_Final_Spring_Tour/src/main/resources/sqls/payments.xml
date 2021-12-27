@@ -10,8 +10,8 @@
 							  CANCEL_DESC, PRODUCT_CODE, USERID,
 							  DELFLAG, UPDATE_DATE) 
 			VALUES (PAYMENTS_SEQ.NEXTVAL, #{imp_uid}, #{pg},
-					#{pay_method}, 'paid', #{price},
-					SYSDATE, 'N', NULL,
+					#{pay_method}, #{status}, #{price},
+					SYSDATE, 'Y', NULL,
 					NULL, #{product_code}, #{userid},
 					'N', SYSDATE)
 	</insert>
@@ -73,7 +73,7 @@
 <!-- 결제 취소 -->
 	<update id="paymentCancel" parameterType="java.util.Map">
 		UPDATE PAYMENTS 
-			SET PAY_STATE = 'CANCEL', CANCEL_DATE = SYSDATE, CANCEL_DESC = #{cancel_desc}, UPDATE_DATE = SYSDATE 
+			SET PAY_STATE = 'CANCEL', CANCEL_DATE = SYSDATE, CANCEL_DESC = #{cancel_desc}, UPDATE_DATE = SYSDATE
 			WHERE PAYCODE = #{paycode} AND IMP_UID = #{imp_uid}
 	</update>
 
