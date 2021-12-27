@@ -73,5 +73,11 @@ public class MyTourBookDaoImpl implements IMyTourBookDao {
 		int m=sqlSession.delete(NS2+"MyTourBookDelete", bookNo);
 		return  n+m;
 	}
+
+	@Override
+	public List<MyTourBookVo> MyTourBookSelectAurthor(String aurthor) {
+		logger.info("MyTourBookDaoImpl MyTourBookSelectAurthor 실행");
+		return sqlSession.selectList(NS+"MyTourBookSelectAurthor", aurthor);
+	}
 	
 }

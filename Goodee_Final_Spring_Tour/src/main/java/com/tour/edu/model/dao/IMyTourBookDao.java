@@ -14,4 +14,5 @@ public interface IMyTourBookDao {
 	public int MyTourBookUpdate(MyTourBookVo myTourBookvo);
 	public int MyTourBookDelflag(int bookNo);
 	public int MyTourBookDelete(int bookNo);
+	public List<MyTourBookVo> MyTourBookSelectAurthor(String aurthor);
 }

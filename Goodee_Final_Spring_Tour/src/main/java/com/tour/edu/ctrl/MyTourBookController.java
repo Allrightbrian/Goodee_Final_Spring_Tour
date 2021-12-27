@@ -39,9 +39,11 @@ public class MyTourBookController {
 	private IMyTourDataService dataService;
 	
 	@RequestMapping(value = "/myBookTourList.do", method = RequestMethod.GET)
-	public String MyTourBookList(Model model) {
+	public String MyTourBookList(Model model, HttpSession session) {
 		logger.info("MyTourBookController MyTourBookList 실행");
-		List<MyTourBookVo> myTourBookList=bookservice.MyTourSelectAll();
+		String aurthor = "User1";
+		//String aurthor =(String) session.getAttribute("userId");
+		List<MyTourBookVo> myTourBookList=bookservice.MyTourBookSelectAurthor(aurthor);
 		model.addAttribute("myTourBookList", myTourBookList);
 		return "service/myTourBookList";
 	}
@@ -78,7 +80,7 @@ public class MyTourBookController {
 		return "service/myTourBookForm";
 	}
 	
-	@RequestMapping(value="/myTourBookInsert.do" , method= RequestMethod.GET)
+	@RequestMapping(value="/myTourBookInsert.do" , method= RequestMethod.POST)
 	public String myTourBookInsert(Model model, MyTourBookVo myTourBookvo ,HttpSession session) {
 		logger.info("MyTourBookController myTourBookInsert 실행");		
 		logger.info("myTourBookvo값 {}", myTourBookvo.toString());
