@@ -9,6 +9,7 @@
 <title>상품 전체조회</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<%@ include file="../common/topMenu.jsp" %>
 </head>
 <body>
 	<div class="container">
@@ -35,7 +36,9 @@
 
 			</tbody>
 		</table>
-		<button onclick="location.href='./productInsertForm.do'">상품 등록</button>
+		<c:if test="${sessionScope.member.manager eq 'Y'}">
+			<button onclick="location.href='./productInsertForm.do'">상품 등록</button>
+    	</c:if>
 	</div>
 
 </body>

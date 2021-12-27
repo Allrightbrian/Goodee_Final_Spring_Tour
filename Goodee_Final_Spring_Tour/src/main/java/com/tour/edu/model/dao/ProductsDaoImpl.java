@@ -38,6 +38,12 @@ public class ProductsDaoImpl implements IProductsDao {
 		logger.info("ProductsDaoImpl 이름으로 상품조회 {}", name);
 		return sqlSession.selectList(NS+"productSelectByName", name);
 	}
+	
+	@Override
+	public ProductsVo productSelectOneByName(String name) {
+		logger.info("ProductsDaoImpl 이름으로 상품단일조회 {}", name);
+		return sqlSession.selectOne(NS+"productSelectOneByName", name);
+	}
 
 	@Override
 	public ProductsVo productSelectOne(int product_code) {
@@ -56,5 +62,7 @@ public class ProductsDaoImpl implements IProductsDao {
 		logger.info("ProductsDaoImpl 상품 삭제 {}", product_code);
 		return sqlSession.update(NS+"productDelflag", product_code);
 	}
+
+
 	
 }

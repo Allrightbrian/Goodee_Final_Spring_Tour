@@ -2,8 +2,10 @@ package com.tour.edu.ctrl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -50,7 +52,7 @@ public class MemberController {
 		return "member/loginForm";
 	}
 	
-	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/login.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String login(MemberVo vo, HttpSession session, Model model) {
 		logger.info("컨트롤러의 로그인 메소드");
 		vo.setSnsjoin("N");
@@ -58,7 +60,17 @@ public class MemberController {
 		
 		if(loginMember.size() == 1) {
 			service.updateFinalLogin(loginMember.get(0));
+			//taewan 세션 세팅 추가
+			Map<String, String> memberInfo = new HashMap<String, String>();
+			memberInfo.put("memberId", loginMember.get(0).getId());
+			memberInfo.put("memberNickname", loginMember.get(0).getNickname());
+			memberInfo.put("managerYN", loginMember.get(0).getManager());
+			System.out.println(memberInfo);
+			
+			session.setAttribute("memberInfo", memberInfo); 
+			//승재님 원본
 			session.setAttribute("member", loginMember.get(0)); 
+			
 			return "redirect:/main.do";
 		}else {
 			return "redirect:/loginForm.do";
@@ -180,8 +192,9 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		logger.info("MemberController 클래스의 logout메소드 실행");
 		session.removeAttribute("member");
+		session.removeAttribute("memberInfo");
 		logger.info("세션에 남아있는지 확인 객체 : {}", session.getAttribute("member"));
-		return "redirect:/main.do";
+		return "member/loginForm";
 	}
 	
 	/*
@@ -297,6 +310,6 @@ public class MemberController {
 	 */
 	@GetMapping(value="/main.do")
 	public String main() {
-		return "member/main";
+		return "common/main";
 	}
 }

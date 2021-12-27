@@ -59,11 +59,11 @@ function infoCheck(){
 		return false;
 	}
 	
-	if(id[0].value != document.getElementById('checkIdFlag').value){
+/*	if(id[0].value != document.getElementById('checkIdFlag').value){
 		alert('아이디를 확인해주세요');
 		id[0].focus();
 		return false;
-	}
+	}*/
 	
 	if(nick[0].value != document.getElementById('checkNickFlag').value){
 		alert('닉네임 중복확인을 해주세요');

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.tour.edu.vo.MyTourBookVo;
 import com.tour.edu.vo.Post_Vo;
 
 @Repository
@@ -35,7 +36,22 @@ public class PostDaoImpl implements IPostDao {
 
 	@Override
 	public Post_Vo detailPostSelect(int postid) {
-		return sqlSession.selectOne("detailPostSelect", postid);
+		return sqlSession.selectOne(NS+"detailPostSelect", postid);
+	}
+
+	@Override
+	public List<Post_Vo> profilePostSelect(String userid) {
+		return sqlSession.selectList(NS+"profilePostSelect", userid);
+	}
+
+	@Override
+	public int wirtePost(Post_Vo vo) {
+		return sqlSession.insert(NS+"wirtePost", vo);
+	}
+
+	@Override
+	public List<MyTourBookVo> myTourSelect(String userid) {
+		return sqlSession.selectList(NS+"myTourSelect", userid);
 	}
 
 }

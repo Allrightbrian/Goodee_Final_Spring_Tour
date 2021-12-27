@@ -37,6 +37,7 @@
     }); 
   }
 </script>
+<%@ include file="../common/topMenu.jsp" %>
 </head>
 <body>
 	<div class="container">
@@ -77,7 +78,7 @@
 
 			</tbody>
 		</table>
-		<button onclick="location.href='./productInsertForm.do'">상품 등록</button>
+		
 	</div>
 
 </body>

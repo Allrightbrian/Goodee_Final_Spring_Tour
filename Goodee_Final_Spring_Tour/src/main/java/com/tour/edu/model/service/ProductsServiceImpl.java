@@ -32,6 +32,12 @@ public class ProductsServiceImpl  implements IProductsService {
 	}
 	
 	@Override
+	public ProductsVo productSelectOneByName(String name) {
+		return dao.productSelectOneByName(name);
+	}
+
+	
+	@Override
 	public ProductsVo productSelectOne(int product_code) {
 		return dao.productSelectOne(product_code);
 	}
@@ -45,5 +51,6 @@ public class ProductsServiceImpl  implements IProductsService {
 	public int productDelflag(int product_code) {
 		return dao.productDelflag(product_code);
 	}
+
 
 }

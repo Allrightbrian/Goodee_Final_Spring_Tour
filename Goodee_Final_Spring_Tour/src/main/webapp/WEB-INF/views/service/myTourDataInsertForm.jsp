@@ -40,6 +40,7 @@ if(total == checked){
 	margin: 0 auto;
 }
 </style>
+<%@ include file="../common/topMenu.jsp" %>
 </head>
 
 <body>
@@ -55,7 +56,7 @@ if(total == checked){
 		<option value="0">==중분류 선택==</option>
 	</select>
 	<input type="button" id="search" value="검색">
-	<input type="submit" value="myTourData 생성"/>
+	<input type="submit" id="insert" value="myTourData 생성"/>
 	<div id="map" style="width: 800px; height: 400px; border: 1px solid black"></div>
 	<table class="table table-striped">
     <thead>

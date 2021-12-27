@@ -9,6 +9,7 @@
 <title>상품 상세보기</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<%@ include file="../common/topMenu.jsp" %>
 </head>
 <body>
 	<div class="container">
@@ -38,6 +39,9 @@
 			<button type="submit">수정</button>
 			<input type="button" value="삭제" onclick="location.href='./productDelflag.do?product_code=${productDetail.product_code}'">
 		</form>
+		<div>
+			<input type="button" class="btn btn-warning btn-block btn-lg" value="돌아가기" onclick="history.back(-1)">
+		</div>
 	</div>
 </body>
 </html>

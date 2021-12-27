@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tour.edu.model.dao.IPostDao;
+import com.tour.edu.vo.MyTourBookVo;
 import com.tour.edu.vo.Post_Vo;
 
 @Service
@@ -40,6 +41,24 @@ public class PostServiceImpl implements IPostService{
 	public Post_Vo detailPostSelect(int postid) {
 		logger.info("PostServiceImpl detailPostSelect postid : {}", postid);
 		return dao.detailPostSelect(postid);
+	}
+
+	@Override
+	public List<Post_Vo> profilePostSelect(String userid) {
+		logger.info("PostServiceImpl profilePostSelect userid : {}", userid);
+		return dao.profilePostSelect(userid);
+	}
+
+	@Override
+	public boolean wirtePost(Post_Vo vo) {
+		logger.info("PostServiceImpl wirtePost Post_Vo : {}", vo);
+		return dao.wirtePost(vo)>0?true:false;
+	}
+
+	@Override
+	public List<MyTourBookVo> myTourSelect(String userid) {
+		logger.info("PostServiceImpl myTourSelect userid : {}", userid);
+		return dao.myTourSelect(userid);
 	}
 	
 }
