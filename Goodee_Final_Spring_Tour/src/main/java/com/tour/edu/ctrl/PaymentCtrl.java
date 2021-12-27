@@ -2,6 +2,7 @@ package com.tour.edu.ctrl;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,16 +87,20 @@ public class PaymentCtrl {
 			String paidAmount = map.get("price");
 //			String paidAmount = "300"; //testcode
 //			System.out.println("paidAmount : " + paidAmount);
+			System.out.println(map+"check");
 			if(paidAmount.equals(iamportServerAmount)) {
 				System.out.println("인증성공");
+				//상품명으로 상품 코드 호출
 				ProductsVo vo = productsService.productSelectOneByName(map.get("name"));
+				//세션에 map으로 올려놓은 memberId 호출
 				@SuppressWarnings("unchecked")
 				Map<String, String> memberInfo = (Map<String, String>) session.getAttribute("memberInfo");
 				String userid = memberInfo.get("memberId");
 				String product_code = Integer.toString(vo.getProduct_code());
+				//상품코드, userid map에 추가
 				map.put("product_code", product_code);
-				map.put("price", map.get("price"));
 				map.put("userid", userid);
+				System.out.println(map+"check");
 				service.paymentInsert(map);
 				//검증 추가할 방법 생각해보기
 			}else {
@@ -110,15 +115,23 @@ public class PaymentCtrl {
 	// 화면처리 및 로직 수정 필요
 	@ResponseBody
 	@RequestMapping(value="/cancelPay.do", method = RequestMethod.GET)
-	public IamportResponse<Payment> cancelByImpUid(Model model, HttpSession session, String imp_uid, String cancel_request_amount) throws IamportResponseException, IOException{	
+	public IamportResponse<Payment> cancelByImpUid(Model model, HttpSession session, String imp_uid, String cancel_request_amount, String reason, String paycode) throws IamportResponseException, IOException{	
 		System.out.println("호출됨");
+		System.out.println(reason);
 		System.out.println(imp_uid);
 		System.out.println(client.paymentByImpUid(imp_uid).getResponse().getImpUid());
 		
 		int client_cancel_request_amount = Integer.parseInt(cancel_request_amount);
+		int paycode2 = Integer.parseInt(paycode);
 		CancelData cancel_data = new CancelData(imp_uid, true);
 		//서버와 아임포트 서버간에 환불 가능 금액을 검증 (부분 취소할때 사용하면 좋을듯)
 		cancel_data.setChecksum(BigDecimal.valueOf(client_cancel_request_amount));
+		Map<String, String> cancelMap = new HashMap<String, String>();
+		cancelMap.put("cancel_desc", reason);
+		cancelMap.put("paycode", paycode);
+		cancelMap.put("imp_uid", imp_uid);
+		
+		service.paymentCancel(cancelMap);
 		return client.cancelPaymentByImpUid(cancel_data);
 	}
 	

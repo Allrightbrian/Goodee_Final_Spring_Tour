@@ -36,7 +36,7 @@ function request_pay() {
 			/* 결제검증 */
 			var sendData = {
 				"imp_uid": rsp.imp_uid, "pg": rsp.pg_provider, "pay_method": rsp.pay_method,
-				"card_name": rsp.card_name, "price": rsp.paid_amount, "name": rsp.name
+				"card_name": rsp.card_name, "price": rsp.paid_amount, "name": rsp.name, "status": rsp.status
 			}
 			$.ajax({
 				url: "./paymentInsert.do",
@@ -90,7 +90,6 @@ function request_pay() {
 <%@ include file="../common/topMenu.jsp"%>
 </head>
 <body>
-${productInfo}
 	<div class="container">
 		<h2>MyTourBook 검색</h2>
 		<input type="button" onclick="myTourBookInsert();" id="myTourBookInsert" value="MyTourBook생성하기" /> 
@@ -127,7 +126,7 @@ ${productInfo}
 		</table>
 	</div>
 	<div>
-		<button onclick="request_pay()">결제</button>
+		<button onclick="request_pay()">이용권 구매</button>
 	</div>
 </body>
 </html>
