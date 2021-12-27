@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.edu.model.dao.ReportDaoImpl">
+
+<!-- 글작성 -->
+	<insert id="writeReport">
+		INSERT INTO REPORT (REPORT_NUM, TITLE, CONTENT, 
+					REFER, STEP, "DEPTH", 
+					DELFLAG, REGDATE, SECRETFLAG, 
+					USERID )
+			VALUES(REPORT_SEQ.NEXTVAL,#{title},#{content},
+			(SELECT NVL(MAX(REPORT_NUM),0) FROM REPORT)+1,0,0,
+			'N',SYSDATE,#{secretflag},
+			#{userid})
+	</insert>
+
+<!-- 전체 글 조회 -->	
+	<select id="selectAllReport" resultType="reportVo">
+		SELECT REPORT_NUM, TITLE, CONTENT, 
+				REFER, STEP, "DEPTH", 
+				DELFLAG, REGDATE, SECRETFLAG,
+				USERID 
+			FROM REPORT r 
+			WHERE DELFLAG = 'N'
+			ORDER BY REFER DESC, STEP 
+	</select>
+	
+<!-- 글 상세 조회 -->
+	<select id="selectOneReport" resultType="reportVo">
+		SELECT * FROM REPORT r 
+				WHERE REPORT_NUM =#{report_num}
+	</select>
+	
+<!-- 글 삭제 -->
+	<update id="deleteReport">
+		UPDATE REPORT SET DELFLAG = 'Y'
+			WHERE REPORT_NUM =#{report_num}
+	</update>
+	
+<!-- 글 수정 -->
+	<update id="updateReport">
+		UPDATE REPORT SET TITLE=#{title}, CONTENT=#{content}, SECRETFLAG=#{secretflag}
+			WHERE REPORT_NUM = #{report_num}
+	</update>
+	
+<!-- 답글 작성 1단계 - update -->
+	<update id="updateAnswerReport">
+		UPDATE REPORT SET STEP = STEP+1
+				WHERE REFER=(SELECT REFER FROM REPORT WHERE REPORT_NUM = #{report_num})
+				AND STEP >(SELECT STEP FROM REPORT WHERE REPORT_NUM =#{report_num})
+	</update>
+
+<!-- 답글 작성 2단계 - insert -->
+	<insert id="writeAnswerReport">
+		INSERT INTO REPORT (REPORT_NUM, TITLE, CONTENT, 
+					REFER, STEP, "DEPTH", 
+					DELFLAG, REGDATE, SECRETFLAG, 
+					USERID )
+			VALUES(REPORT_SEQ.NEXTVAL, #{title},#{content},
+					(SELECT REFER FROM REPORT r WHERE REPORT_NUM=#{report_num}), (SELECT STEP FROM REPORT r WHERE REPORT_NUM=#{report_num})+1, (SELECT "DEPTH" FROM REPORT r WHERE REPORT_NUM=#{report_num})+1,
+					'N', SYSDATE, #{secretflag},
+					#{userid})
+	</insert>
+
+		
+
+		
+
+
+
+</mapper>
