@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%@ include file="../common/topMenu.jsp" %>
 </head>
 <body>
 	<%-- <c:if test="${msg != null}">

@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+#container{
+	border: 10px solid #800000;
+	position: relative;
+	margin: auto;
+	
+	width: 400px;
+	height: 300px;
+	
+	padding: 30px;
+	padding-top: 0px;
+	
+	top: 200px;
+}
+
+#title{
+	text-align: center;
+	
+	font-size: 30pt;
+	font-weight: bold;
+	
+	margin-top: 10px;
+	margin-bottom: 40px;
+}
+
+.inputWord{
+	width: 100px;
+	font-weight: bold;
+	float: left;
+	display: flex;
+	justify-content: space-around;
+}
+
+#inputPw, #inputId{
+	size: 100%;
+	box-sizing: border-box;
+}
+
+#login{
+	position: relative;
+	
+	margin: 10px auto;
+	
+	width: 100px;
+	height: 40px;
+	font-weight: bold; 
+}
+
+#bottom{
+	text-align: center;
+	}
+	
+#bottom>input {
+	widows: 100px;
+}	
+
+

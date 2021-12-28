@@ -61,6 +61,8 @@
 	}
 </script>
 <title>myTourBookDetail</title>
+<%@ include file="../common/topMenu.jsp" %>
+
 <style>
 .dot {overflow:hidden;float:left;width:12px;height:12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');}    
 .dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}

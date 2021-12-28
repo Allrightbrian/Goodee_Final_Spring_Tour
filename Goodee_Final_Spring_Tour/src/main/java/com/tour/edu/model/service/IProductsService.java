@@ -13,6 +13,8 @@ public interface IProductsService {
 	public List<ProductsVo> productSelectAll();
 //	상품 조회(이름)
 	public List<ProductsVo> productSelectByName(String name);
+//	상품 단일조회(이름)
+	public ProductsVo productSelectOneByName(String name);
 //	상품 단일 조회
 	public ProductsVo productSelectOne(int product_code);
 //	상품 수정

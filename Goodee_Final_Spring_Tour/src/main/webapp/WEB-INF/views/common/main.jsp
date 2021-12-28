@@ -5,11 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%@ include file="./topMenu.jsp" %>
 </head>
 <body>
-	${sessionScope.member.id}
-	<br>${sessionScope.member.nickname}
-	<a href="./logout.do">로그아웃</a>
-	<a href="./confirmPw.do">정보 수정</a>
+	<h1>Spring Tour</h1>
 </body>
 </html>

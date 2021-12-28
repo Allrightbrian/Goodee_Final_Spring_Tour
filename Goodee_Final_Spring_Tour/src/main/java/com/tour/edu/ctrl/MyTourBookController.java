@@ -1,4 +1,4 @@
-package com.tour.edu.ctrl;
+ package com.tour.edu.ctrl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +24,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tour.edu.model.service.IMyTourBookService;
 import com.tour.edu.model.service.IMyTourDataService;
+import com.tour.edu.model.service.IProductsService;
+import com.tour.edu.vo.MemberVo;
 import com.tour.edu.vo.MyTourBookVo;
 import com.tour.edu.vo.MyTourDataVo;
+import com.tour.edu.vo.ProductsVo;
 
 @Controller
 public class MyTourBookController {
@@ -37,14 +39,25 @@ public class MyTourBookController {
 	private IMyTourBookService bookservice;
 	@Autowired 
 	private IMyTourDataService dataService;
+	@Autowired
+	private IProductsService service;
 	
 	@RequestMapping(value = "/myBookTourList.do", method = RequestMethod.GET)
 	public String MyTourBookList(Model model, HttpSession session) {
 		logger.info("MyTourBookController MyTourBookList 실행");
-		String aurthor = "User1";
-		//String aurthor =(String) session.getAttribute("userId");
-		List<MyTourBookVo> myTourBookList=bookservice.MyTourBookSelectAurthor(aurthor);
+		//String aurthor = "User1";
+		MemberVo member =(MemberVo) session.getAttribute("member");
+		List<MyTourBookVo> myTourBookList=bookservice.MyTourBookSelectAurthor(member.getId());
 		model.addAttribute("myTourBookList", myTourBookList);
+		
+		@SuppressWarnings("unchecked")
+		Map<String, String> memberInfo = (Map<String, String>) session.getAttribute("memberInfo");
+		System.out.println(memberInfo+"MyTourBookController MyTourBookList memberInfo 확인");
+//		model.addAttribute("userid", id);
+		
+		ProductsVo productInfo = (ProductsVo) service.productSelectOneByName("인벤토리추가");
+		model.addAttribute("productInfo", productInfo);
+		
 		return "service/myTourBookList";
 	}
 	
@@ -84,8 +97,9 @@ public class MyTourBookController {
 	public String myTourBookInsert(Model model, MyTourBookVo myTourBookvo ,HttpSession session) {
 		logger.info("MyTourBookController myTourBookInsert 실행");		
 		logger.info("myTourBookvo값 {}", myTourBookvo.toString());
-		//myTourBookvo.setAurthor(session.getAttribute(username));
-		myTourBookvo.setAurthor("User1");
+		MemberVo member =(MemberVo) session.getAttribute("member");
+		myTourBookvo.setAurthor(member.getId());
+		//myTourBookvo.setAurthor("User1");
 		bookservice.MyTourBookInsert(myTourBookvo);
 		return "redirect:/myBookTourList.do";
 	}
