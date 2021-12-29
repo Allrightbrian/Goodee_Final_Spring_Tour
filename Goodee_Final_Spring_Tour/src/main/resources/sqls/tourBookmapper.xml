@@ -7,6 +7,12 @@
  			FROM MYTOURBOOK
  	</select>
  	
+ 	<select id="MyTourBookSelectAurthor" parameterType="java.lang.String"  resultType="MyTourBookVo">
+ 		SELECT BOOKNO,TITLE,AURTHOR,TO_CHAR(REGDATE,'YYYY-MM-DD') REGDATE,KEYWORD,DELFLAG
+ 			FROM MYTOURBOOK 
+ 			WHERE AURTHOR= #{aurthor}
+ 	</select>
+ 	
  	<select id="MyTourBookSelectNo" parameterType="java.lang.Integer" resultType="MyTourBookVo" >
  		SELECT BOOKNO,TITLE,AURTHOR,TO_CHAR(REGDATE,'YYYY-MM-DD') REGDATE,KEYWORD,DELFLAG
  			FROM MYTOURBOOK

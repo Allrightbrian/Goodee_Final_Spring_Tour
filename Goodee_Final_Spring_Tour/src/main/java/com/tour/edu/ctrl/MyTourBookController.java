@@ -1,4 +1,4 @@
-package com.tour.edu.ctrl;
+ package com.tour.edu.ctrl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tour.edu.model.service.IMyTourBookService;
 import com.tour.edu.model.service.IMyTourDataService;
 import com.tour.edu.model.service.IProductsService;
+import com.tour.edu.vo.MemberVo;
 import com.tour.edu.vo.MyTourBookVo;
 import com.tour.edu.vo.MyTourDataVo;
 import com.tour.edu.vo.ProductsVo;
@@ -45,7 +45,9 @@ public class MyTourBookController {
 	@RequestMapping(value = "/myBookTourList.do", method = RequestMethod.GET)
 	public String MyTourBookList(Model model, HttpSession session) {
 		logger.info("MyTourBookController MyTourBookList 실행");
-		List<MyTourBookVo> myTourBookList=bookservice.MyTourSelectAll();
+		//String aurthor = "User1";
+		MemberVo member =(MemberVo) session.getAttribute("member");
+		List<MyTourBookVo> myTourBookList=bookservice.MyTourBookSelectAurthor(member.getId());
 		model.addAttribute("myTourBookList", myTourBookList);
 		
 		@SuppressWarnings("unchecked")
@@ -91,12 +93,13 @@ public class MyTourBookController {
 		return "service/myTourBookForm";
 	}
 	
-	@RequestMapping(value="/myTourBookInsert.do" , method= RequestMethod.GET)
+	@RequestMapping(value="/myTourBookInsert.do" , method= RequestMethod.POST)
 	public String myTourBookInsert(Model model, MyTourBookVo myTourBookvo ,HttpSession session) {
 		logger.info("MyTourBookController myTourBookInsert 실행");		
 		logger.info("myTourBookvo값 {}", myTourBookvo.toString());
-		//myTourBookvo.setAurthor(session.getAttribute(username));
-		myTourBookvo.setAurthor("User1");
+		MemberVo member =(MemberVo) session.getAttribute("member");
+		myTourBookvo.setAurthor(member.getId());
+		//myTourBookvo.setAurthor("User1");
 		bookservice.MyTourBookInsert(myTourBookvo);
 		return "redirect:/myBookTourList.do";
 	}

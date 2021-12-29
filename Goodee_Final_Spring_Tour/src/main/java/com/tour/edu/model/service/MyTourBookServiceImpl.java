@@ -64,5 +64,11 @@ public class MyTourBookServiceImpl implements IMyTourBookService {
 		logger.info("MyTourBookServiceImpl MyTourBookDelete");
 		return dao.MyTourBookDelete(bookNo);
 	}
+
+	@Override
+	public List<MyTourBookVo> MyTourBookSelectAurthor(String aurthor) {
+		logger.info("MyTourBookServiceImpl MyTourBookSelectAurthor");
+		return dao.MyTourBookSelectAurthor(aurthor);
+	}
 	
 }

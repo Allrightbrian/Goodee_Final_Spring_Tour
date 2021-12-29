@@ -28,11 +28,17 @@ public class Test {
 	public void test() {
 		//assertNotNull(context);
 		//assertNotNull(session);
-		MyTourBookVo vo = new MyTourBookVo();
-		vo.setTitle("MyTourBookVo insert 테스트2");
-		vo.setAurthor("저자2");
-		vo.setKeyword("keyword2");
-		System.out.println(dao.MyTourBookInsert(vo));
+//		MyTourBookVo vo = new MyTourBookVo();
+//		vo.setTitle("MyTourBookVo update 변경");
+//		vo.setAurthor("저자변경");
+//		vo.setKeyword("keyword3");
+//		vo.setDelflag("N");
+//		vo.setBookNo(1);
+//		System.out.println(dao.MyTourBookInsert(vo));
+//		System.out.println(dao.MyTourBookSelectNo(1));
+//		System.out.println(dao.MyTourBookSelectTitle("insert"));
+		//assertEquals(1, dao.MyTourBookUpdate(vo));
+		//assertEquals(1, dao.MyTourBookDelflag(1));
 	}
 
 }

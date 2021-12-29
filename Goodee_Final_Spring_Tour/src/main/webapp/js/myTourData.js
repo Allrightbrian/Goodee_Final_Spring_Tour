@@ -70,13 +70,13 @@ $(document).ready(function() {
 				$("#attrTest tr").remove();
 
 				setMarkers(null);
-				var mapx = 0;
-				var mapy= 0;
+				var mapx = data[0].mapx;
+				var mapy= data[0].mapy;
 				
 				for (list in data) {
 
-					var mapx = Number(mapx) + Number(data[list].mapx);
-					var mapy = Number(mapy) + Number(data[list].mapy);
+					//var mapx = Number(mapx) + Number(data[list].mapx);
+					//var mapy = Number(mapy) + Number(data[list].mapy);
 					var my_tbody = document.getElementById('attrTest');
 					var row = my_tbody.insertRow( my_tbody.rows.length );
 					var cell1 = row.insertCell(0);
@@ -125,9 +125,9 @@ $(document).ready(function() {
 				}
 				
 
-				mapx = mapx / Number(data.length);
-				mapy = mapy / Number(data.length);
-				console.log("평균 좌표 : " + mapx + " / " + mapy);
+				//mapx = mapx / Number(data.length);
+				//mapy = mapy / Number(data.length);
+				console.log("처음 좌표 : " + mapx + " / " + mapy);
 
 				panTo(mapy, mapx);
 			},

@@ -39,7 +39,6 @@ public class TestController {
 	private String mobileOS = "ETC";
 	private String mobileApp = "AppTest";
 	private String numOfRows = "30";
-	// private String pageNo = "3";
 	private String type = "json";
 
 
